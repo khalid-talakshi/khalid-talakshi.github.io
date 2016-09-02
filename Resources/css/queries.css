@@ -1,6 +1,6 @@
 /* Big tablet to 1200px (widths smaller taht the 1140px row) */
 @media only screen and (max-width: 1200px) {
-    
+
 }
 
 
@@ -8,9 +8,9 @@
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
 	
 
-	.add-bottom-margin {
-		margin-bottom: 30px;
-	}
+    .row {
+        width: 760px;
+    }
 }
 
 
@@ -18,10 +18,13 @@
 /* Small phones to small tablets: from 481px to 767px */
 @media only screen and (min-width: 481px) and (max-width: 767px) {
 	
-	.add-bottom-margin {
-		margin-bottom: 30px;
-	}
+    .main-nav li {
+        padding-bottom: 50px;
+    }
    
+    .main-nav li:last-child {
+        padding-bottom: 0;
+    }
     
 }
 
@@ -34,8 +37,8 @@
 		text-align: center;
 	}
 
-	.add-bottom-margin {
-		margin-bottom: 30px;
-	}
+    .main-nav li {
+        padding-bottom: 40px;
+    }
 	
 }
