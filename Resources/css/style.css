@@ -9,7 +9,7 @@
 }
 
 html {
-    background-color: #fef;
+    background-color: #ffffff;
     color: #555;
     font-family: 'Lato', 'Arial', sans-serif;
     font-weight: 300;
@@ -171,7 +171,8 @@ nav {
 /*--------------------------------*/
 
 .about  {
-   background-color: #FF7B6B;
+   background-color: #a971c1;
+    color: #3B3A35;
 }
 
 .bold {
