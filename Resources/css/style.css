@@ -104,8 +104,8 @@ a:visited {
 
 a:hover,
 a:active {
-	color: #FB6648;
-    border-color: #FB6648;
+	color: #a971c1;
+    border-color: #a971c1;
     transition: border-color 0.2s, color 0.2s;
 }
 
