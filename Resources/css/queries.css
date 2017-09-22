@@ -17,13 +17,13 @@
 
 /* Small phones to small tablets: from 481px to 767px */
 @media only screen and (min-width: 481px) and (max-width: 767px) {
-	
-    .main-nav li {
-        padding-bottom: 50px;
+    
+    #cvBar, #linkedInBar {
+        display: none;
     }
-   
-    .main-nav li:last-child {
-        padding-bottom: 0;
+    
+    #typeOutBar, #nameBar {
+        text-align: center;
     }
     
 }

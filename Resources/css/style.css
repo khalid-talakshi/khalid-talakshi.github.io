@@ -2,7 +2,7 @@
     font-family: 'Encode Sans Expanded', sans-serif;
 }
 
-.nav p {
+#nav p {
     font-family: 'Encode Sans Expanded', sans-serif;
     color: #ecf0f1;
 }
@@ -44,13 +44,21 @@ h1 {
     vertical-align: middle;
 }
 
-.nav .icon {
+#nav .icon {
     color: #ecf0f1;
-    font-size: 3.5em;
+    font-size: 2.5em;
     position: relative;
-    vertical-align: middle;
-    height: 100%;
 }
+
+.sideLinks {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+#firstIcon {
+    margin-top: 24px;
+}
+
 
 .navBox {
     text-align: center;
@@ -59,3 +67,5 @@ h1 {
 #homeLink {
     background-color: #4EA5D9;
 }
+
+#pictureCol {}
