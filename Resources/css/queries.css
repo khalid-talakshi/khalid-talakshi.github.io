@@ -11,6 +11,8 @@
     .row {
         width: 760px;
     }
+    
+    
 }
 
 
@@ -41,4 +43,7 @@
         padding-bottom: 40px;
     }
 	
+     #cvBar, #linkedInBar {
+        display: none;
+    }
 }
