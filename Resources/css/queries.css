@@ -6,10 +6,9 @@
 
 /* Small tablet to big tablet: from 768px to 1023px */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
-	
-
-    .row {
-        width: 760px;
+    
+    .flex-column {
+    width: 100%;
     }
     
     
@@ -28,6 +27,10 @@
         text-align: center;
     }
     
+    .flex-column {
+    width: 100%;
+    }
+    
 }
 
 
@@ -41,6 +44,10 @@
          
     #typeOutBar, #nameBar {
         text-align: center;
+    }
+    
+    .flex-column {
+    width: 100%;
     }
     
 }

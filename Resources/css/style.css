@@ -130,6 +130,12 @@ h1 {
     line-height: 170%;
 }
 
+.flex-column {
+    flex-shrink: 1;
+    flex-basis: auto;
+    display: flex;
+}
+
   /*---------------------------*/
  /*        ANIMATIONS         */
 /*---------------------------*/
