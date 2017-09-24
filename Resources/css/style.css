@@ -16,10 +16,10 @@ body {
     background-image: url(/Resources/img/old_moon.png)
 }
 
-/*.nopadding {
-    padding: 0;
-    margin: 0;
-}*/
+.nopadding {
+    padding: 0; !important
+    margin: 0; !important
+}
 
 #nav p {
     font-family: 'Encode Sans Expanded', sans-serif;
