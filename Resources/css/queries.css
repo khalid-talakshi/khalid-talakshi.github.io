@@ -8,7 +8,7 @@
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     
     .flex-column {
-    width: 100%;
+        width: 100%;
     }
     
     
@@ -28,7 +28,11 @@
     }
     
     .flex-column {
-    width: 100%;
+        width: 100%;
+    }
+    
+    .long-copy {
+        font-size: 90%;
     }
     
 }
@@ -47,7 +51,11 @@
     }
     
     .flex-column {
-    width: 100%;
+        width: 100%;
+    }
+    
+    .long-copy {
+        font-size: 90%;
     }
     
 }
