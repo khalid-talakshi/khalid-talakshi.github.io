@@ -19,21 +19,21 @@
 		
 	</head>
 	
-	<body>
+	<body class="boxed">
 
         <div class="container-fluid">
 
             <div class="row" id="nav">
 
-                <div class="col-md-4" id="pictureCol">
+                <div class="col-md-4 nopadding" id="pictureCol">
 
                     <img src="#" alt="Profile Image"/>
 
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-8 nopadding">
 
-                    <div class="row">
+                    <div class="row nopadding">
 
                         <div class="col-md-10" id="nameBar">
 
@@ -41,9 +41,9 @@
 
                         </div>
 
-                        <div class="col-md-2 hvr-sweep-to-right" id="cvBar">
+                        <div class="col-md-2 hvr-sweep-to-right nopadding" id="cvBar">
                             
-                            <a href="#"><i class="icon ion-ios-cloud-download-outline sideLinks" id="firstIcon"></i></a>
+                            <a href="#" alt="Download CV"><i class="icon ion-ios-cloud-download-outline sideLinks" id="firstIcon"></i></a>
 
                         </div>
 
@@ -57,15 +57,28 @@
 
                         </div>
                         
-                        <div class="col-md-2 hvr-sweep-to-right" id="linkedInBar"><i class="icon ion-social-linkedin-outline sideLinks"></i></div>
+                        <div class="col-md-2 hvr-sweep-to-right" id="linkedInBar"><a href="#"><i class="icon ion-social-linkedin-outline sideLinks"></i></a></div>
 
                     </div>
                     
                     <div class="row">
                         
                         <div class="col-4 col-md-2 navBox hvr-sweep-to-bottom" id="homeLink">
-                            <a href="#">
+                            <a href="#nav">
                                 <i class="icon ion-ios-home-outline"></i><br /><p>Home</p>
+                            </a>
+                        </div>
+                        
+                        <div class="col-4 col-md-2 navBox hvr-sweep-to-bottom" id="aboutLink">
+                            <a href="#about">
+                                <i class="icon ion-ios-person-outline"><br /></i><p>About</p>
+                            </a>
+                        </div>
+                        
+                        
+                         <div class="col-4 col-md-2 navBox hvr-sweep-to-bottom" id="resumeLink">
+                            <a href="#">
+                                <i class="icon ion-ios-paper-outline"></i><br /><p>Resume</p>
                             </a>
                         </div>
                         
@@ -75,14 +88,19 @@
                             </a>
                         </div>
                         
-                        <div class="col-4 col-md-2 navBox hvr-sweep-to-bottom" id="blogLink">
+                        
+                        <div class="col-4 col-md-2 navBox hvr-sweep-to-bottom" id="contactLink">
                             <a href="#">
-                                <i class="icon ion-ios-compose-outline"></i><br /><p>Portfolio</p>
+                                <i class="icon ion-ios-email-outline"></i><br /><p>Contact</p>
                             </a>
                         </div>
-                        <div class="col-4 col-md-2">Text</div>
-                        <div class="col-4 col-md-2">Text</div>
-                        <div class="col-4 col-md-2">Text</div>
+                        
+                        <div class="col-4 col-md-2 navBox hvr-sweep-to-bottom" id="blogLink">
+                            <a href="#">
+                                <i class="icon ion-ios-compose-outline"></i><br /><p>Blog</p>
+                            </a>
+                        </div>
+
                     
                     </div>
 
@@ -90,18 +108,80 @@
 
             </div>
             
-            <div class="row">
+            <div class="row" id="about">
                 
-                <div class="col-md-8">
+                <div class="col-md-8" id="aboutBox">
+                    
+                    <div class="infoBox">
+                        
+                        <h3>About</h3><br />
+                        
+                        <p class="long-copy">Hello there! My name is Khalid Talakshi and thank you for visitng my site. I'm a grade 12 student at Robert Bateman High School in Burlington, Canada. I am enrolled in the International Baccalaureate (IB) Diploma Program, a higher level program aimed at developing a wide variety of skills. I am the president of our local DECA chapter, the Secretary General for Model United Nations at RBHs, and am a member of the Robert Bateman High School Student Council. Outside of School I develop websites and web applications, and like to read and write. This web portfolio has all of my projects, in progress or completed, as well as my resume and certifications. Please feel free to explore and/or contact me. </p>
+                    
+                    </div>
                 
                 </div>
                 
-                <div class="col-md-4">
+                <div class="col-md-4" id="personalInfo">
+                    
+                    <div class="infoBox">
+                        
+                    <h3>Personal Info</h3><br />
+                        
+                        <div class="row">
+
+                            <div class="col-sm-6">
+
+                                <p class="bold">Name</p>
+
+                            </div>
+
+                            <div class="col-sm-6">
+
+                                <p>Khalid N. Talakshi</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                        <div class="col-sm-6">
+
+                            <p class="bold">Birth Day</p>
+
+                        </div>
+
+                        <div class="col-sm-6">
+
+                            <p>06/19/2000</p>
+
+                        </div>
+
+                    </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-6">
+
+                                <p class="bold">Level of Education</p>
+
+                            </div>
+
+                            <div class="col-sm-6">
+
+                                <p>High School (International baccalaureate)</p>
+
+                            </div>
+
+                        </div>
                 
+                    </div>
+
                 </div>
             
             </div>
-
+            
         </div>
 
         <script src="Vendors/js/jquery-3.2.1.slim.min.js"></script>

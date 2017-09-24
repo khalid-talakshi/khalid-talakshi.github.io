@@ -2,6 +2,25 @@
     font-family: 'Encode Sans Expanded', sans-serif;
 }
 
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.boxed {
+    display: block;
+    position: relative;
+    max-width: 1280px;
+    margin-right: auto;
+    margin-left: auto;
+    background-image: url(/Resources/img/old_moon.png)
+}
+
+.nopadding {
+    padding: 0;
+    margin: 0;
+}
+
 #nav p {
     font-family: 'Encode Sans Expanded', sans-serif;
     color: #ecf0f1;
@@ -72,11 +91,44 @@ h1 {
     background-color: #4592BF
 }
 
-#blogLink {
+#contactLink {
     background-color: #5CC2FF
 }
 
+#aboutLink {
+    background-color: #2044B1;
+}
+
+#resumeLink {
+    background-color: #2752D7
+}
+
+#blogLink {
+    background-color: #102157
+}
+
 #pictureCol {}
+
+#personalInfo {
+    background: #efefef
+}
+
+#aboutBox {
+    background: #fff;
+}
+
+.infoBox {
+    padding: 50px;
+    width: 100%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.long-copy {
+    line-height: 170%;
+}
 
   /*---------------------------*/
  /*        ANIMATIONS         */
