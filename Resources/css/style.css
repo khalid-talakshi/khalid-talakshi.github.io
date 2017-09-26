@@ -67,6 +67,7 @@ h1 {
 #nav .icon {
     color: #ecf0f1;
     font-size: 2.5em;
+    display: block;
     /*position: relative;*/
 }
 
@@ -129,12 +130,6 @@ h1 {
 
 .long-copy {
     line-height: 170%;
-}
-
-.flex-column {
-    flex-shrink: 1;
-    flex-basis: auto;
-    display: flex;
 }
 
   /*---------------------------*/
