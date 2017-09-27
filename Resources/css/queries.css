@@ -1,6 +1,6 @@
 /* Big tablet to 1200px (widths smaller taht the 1140px row) */
 @media only screen and (max-width: 1200px) {
-
+    
 }
 
 
@@ -31,6 +31,11 @@
     #navbar .navBox a i{
         display: none;
     }
+    
+    #homeLink {
+        margin-left: -1px;
+    }
+
     
 }
 

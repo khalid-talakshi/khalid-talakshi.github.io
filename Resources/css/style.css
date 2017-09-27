@@ -1,5 +1,5 @@
 * {
-    font-family: 'Encode Sans Expanded', sans-serif;
+     font-family: 'Poppins', sans-serif; 
     box-sizing: border-box;
 }
 
@@ -32,7 +32,7 @@ h1 {
 }
 
 #nameBar {
-    background-color: #384B72;
+    background-color: #004ba0; 
     padding: 30px 0;
     color: #ecf0f1;
 }
@@ -48,7 +48,7 @@ h1 {
 }
 
 #typeOutBar {
-    background-color: #4e679b;
+    background-color: #1976d2; 
     padding: 30px 0;
     color: #ecf0f1;
 
@@ -83,10 +83,11 @@ h1 {
 
 .navBox {
     text-align: center;
+    background-color: #63a4ff
 }
 
-#homeLink {
-    background-color: #4EA5D9;
+/*#homeLink {
+    background-color: #2E61FD;
 }
 
 #portfolioLink {
@@ -107,7 +108,7 @@ h1 {
 
 #blogLink {
     background-color: #102157
-}
+}*/
 
 #pictureCol {}
 
@@ -131,6 +132,18 @@ h1 {
 .long-copy {
     line-height: 170%;
 }
+
+    
+.jobTitle { 
+    font-weight: bold; 
+    font-size: 1.2em; 
+ }
+
+#employmentBox {
+    background-color: #4d4e50;
+    color: #ecf0f1;
+}
+ 
 
   /*---------------------------*/
  /*        ANIMATIONS         */
