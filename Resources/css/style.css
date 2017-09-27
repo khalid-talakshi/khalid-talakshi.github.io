@@ -67,8 +67,8 @@ h1 {
 #nav .icon {
     color: #ecf0f1;
     font-size: 2.5em;
-    display: block;
-    /*position: relative;*/
+    /*display: block;*/
+    position: relative;
 }
 
 .sideLinks {
