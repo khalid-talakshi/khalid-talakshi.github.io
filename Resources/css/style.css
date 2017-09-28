@@ -143,6 +143,34 @@ h1 {
     background-color: #4d4e50;
     color: #ecf0f1;
 }
+
+#skillsBox {
+    background-color: #7c7c7c;
+    color: #ecf0f1
+}
+
+.centerTitle{
+    width: 100%;
+}
+.titleRow {
+    text-align: center;
+}
+
+#skillsBox h3 {
+    padding-bottom: 10px;
+}
+
+/*#skillsAndHobbiesTitle {
+    border-bottom: 1px solid #ecf0f1;
+}*/
+
+#alignRight {
+    text-align: right;
+}
+
+.hobbiesRow {
+    text-align: right;
+}
  
 
   /*---------------------------*/
