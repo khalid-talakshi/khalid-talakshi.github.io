@@ -32,7 +32,7 @@
         display: none;
     }
     
-    #homeLink {
+    #homeLink, #blogLink {
         margin-left: -1px;
     }
 
@@ -60,7 +60,7 @@
         display: none;
     }
     
-     #homeLink {
+     #homeLink, #blogLink {
         margin-left: -1px;
     }
 

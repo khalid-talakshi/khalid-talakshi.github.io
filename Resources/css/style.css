@@ -171,7 +171,15 @@ h1 {
 .hobbiesRow {
     text-align: right;
 }
- 
+
+#portTitle {
+    padding-bottom: 5px;
+    color: #ecf0f1;
+}
+
+#portfolio {
+    background-color: #004a9f;
+}
 
   /*---------------------------*/
  /*        ANIMATIONS         */
