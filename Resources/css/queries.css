@@ -1,17 +1,13 @@
 /* Big tablet to 1200px (widths smaller taht the 1140px row) */
 @media only screen and (max-width: 1200px) {
-    #navbar {
-		height: 100%;
-	}
+	#pictureCol img {
+		height: 98.3%;
+	}    
 }
 
 
 /* Small tablet to big tablet: from 768px to 1023px */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    
-    #navbar {
-		height: 100%;
-	}
     
 }
 
@@ -39,6 +35,10 @@
     #homeLink, #blogLink {
         margin-left: -1px;
     }
+	
+	#pictureCol img {
+		margin: 0;
+	}
 
     
 }
