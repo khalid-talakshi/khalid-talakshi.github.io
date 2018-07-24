@@ -83,7 +83,7 @@ h1 {
 
 .navBox {
     text-align: center;
-    background-color: #63a4ff
+    background-color: #63a4ff;
 }
 
 /*#homeLink {
@@ -110,10 +110,19 @@ h1 {
     background-color: #102157
 }*/
 
-#pictureCol {}
+#pictureCol {
+	padding: 0;
+	margin: 0;
+}
+
+#pictureCol img {
+	width: 100%;
+	padding: 0;
+	margin: 0 0 -10px 0;
+}
 
 #personalInfo {
-    background: #efefef
+    background: #efefef;
 }
 
 #aboutBox {
