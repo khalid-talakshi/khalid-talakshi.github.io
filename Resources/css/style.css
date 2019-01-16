@@ -18,8 +18,8 @@ body {
 }
 
 .nopadding {
-    padding: 0; !important
-    margin: 0; !important
+    padding: 0  !important;
+    margin: 0 !important; 
 }
 
 #nav p {
@@ -156,6 +156,11 @@ h1 {
 #skillsBox {
     background-color: #7c7c7c;
     color: #ecf0f1
+}
+
+#certBox {
+    background-color: #4d4e50;
+    color: #ecf0f1;
 }
 
 .centerTitle{
