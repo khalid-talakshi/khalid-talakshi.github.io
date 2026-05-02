@@ -1,0 +1,350 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EChartsLineChart from "../components/charts/EChartsLineChart";
+import EChartsDualAxisChart from "../components/charts/EChartsDualAxisChart";
+import EChartsScatterChart from "../components/charts/EChartsScatterChart";
+
+// Sample data for line chart
+const lineChartTraces = [
+  {
+    name: "Series 1",
+    x: "time",
+    y: "value1",
+    color: "#008fec",
+    data: Array.from({ length: 50 }, (_, i) => ({
+      time: i,
+      value1: Math.sin(i * 0.2) * 100 + 100 + Math.random() * 20,
+      value2: Math.cos(i * 0.15) * 80 + 120 + Math.random() * 15,
+    })),
+  },
+  {
+    name: "Series 2",
+    x: "time",
+    y: "value2",
+    color: "#82ca9d",
+    data: Array.from({ length: 50 }, (_, i) => ({
+      time: i,
+      value1: Math.sin(i * 0.2) * 100 + 100 + Math.random() * 20,
+      value2: Math.cos(i * 0.15) * 80 + 120 + Math.random() * 15,
+    })),
+  },
+];
+
+// Sample data for dual-axis chart
+const dualAxisData = Array.from({ length: 20 }, (_, i) => ({
+  name: i + 1,
+  cost: Math.random() * 10,
+  impression: Math.random() * 500,
+}));
+
+// Sample data for scatter chart
+const scatterTraces = [
+  {
+    name: "Group A",
+    x: "x",
+    y: "y",
+    data: Array.from({ length: 30 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+    })),
+    color: "#008fec",
+  },
+  {
+    name: "Group B",
+    x: "x",
+    y: "y",
+    data: Array.from({ length: 30 }, () => ({
+      x: Math.random() * 100 + 50,
+      y: Math.random() * 100 + 50,
+    })),
+    color: "#82ca9d",
+  },
+];
+
+// Sample data for scatter chart with color mapping (using Trace format)
+const scatterColorTraces = [
+  {
+    name: "Temperature Distribution",
+    x: "x",
+    y: "y",
+    color: "temperature", // Data key for color mapping
+    data: Array.from({ length: 40 }, (_, i) => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      temperature: Math.sin(i * 0.3) * 50 + 50, // Temperature value (0-100)
+    })),
+  },
+];
+
+// Example with solid color using Trace format
+const scatterSolidColorTraces = [
+  {
+    name: "Group A",
+    x: "x",
+    y: "y",
+    color: "#008fec", // Hex color - use as solid color
+    data: Array.from({ length: 30 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+    })),
+  },
+  {
+    name: "Group B",
+    x: "x",
+    y: "y",
+    color: "#82ca9d", // Hex color - use as solid color
+    data: Array.from({ length: 30 }, () => ({
+      x: Math.random() * 100 + 50,
+      y: Math.random() * 100 + 50,
+    })),
+  },
+];
+---
+
+<BaseLayout title="ECharts Demo">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8 text-blue-400">
+      ECharts Migration Demo
+    </h1>
+
+    <div class="space-y-12">
+      <!-- Line Chart Section -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-blue-300">
+          Line Chart with Zoom & Pan
+        </h2>
+        <p class="text-gray-300">
+          Try scrolling to zoom, dragging to pan. This chart supports
+          single-axis zoom with smooth animations.
+        </p>
+        <div class="bg-gray-900 p-4 rounded-lg">
+          <EChartsLineChart
+            client:load
+            traces={lineChartTraces}
+            title="Multi-Series Line Chart"
+            xAxisLabel="Time"
+            yAxisLabel="Value"
+            enableZoom={true}
+            enablePan={true}
+            height={400}
+          />
+        </div>
+      </section>
+
+      <!-- Dual-Axis Chart Section -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-blue-300">Dual-Axis Chart</h2>
+        <p class="text-gray-300">
+          Compare metrics with different scales. Left axis (blue) for Cost,
+          Right axis (green) for Impressions. Each axis can be zoomed
+          independently.
+        </p>
+        <div class="bg-gray-900 p-4 rounded-lg">
+          <EChartsDualAxisChart
+            client:load
+            data={dualAxisData}
+            series={[
+              {
+                name: "Cost",
+                dataKey: "cost",
+                color: "#8884d8",
+                yAxisId: "left",
+              },
+              {
+                name: "Impressions",
+                dataKey: "impression",
+                color: "#82ca9d",
+                yAxisId: "right",
+              },
+            ]}
+            title="Cost vs Impressions"
+            xAxisLabel="Campaign"
+            leftYAxisLabel="Cost ($)"
+            rightYAxisLabel="Impressions"
+            height={400}
+          />
+        </div>
+      </section>
+
+      <!-- Scatter Chart Section -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-blue-300">Scatter Chart</h2>
+        <p class="text-gray-300">
+          Visualize correlations and distributions. Supports 2D zoom and pan for
+          detailed exploration.
+        </p>
+        <div class="bg-gray-900 p-4 rounded-lg">
+          <EChartsScatterChart
+            client:load
+            traces={scatterTraces}
+            title="Correlation Analysis"
+            xAxisLabel="X Value"
+            yAxisLabel="Y Value"
+            symbolSize={8}
+            height={400}
+          />
+        </div>
+      </section>
+
+      <!-- Scatter Chart with Trace Format (Solid Colors) -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-blue-300">
+          Scatter Chart with Trace Format (Solid Colors)
+        </h2>
+        <p class="text-gray-300">
+          Using Trace format with hex colors. When color is a hex string (e.g.,
+          "#008fec"), points use that solid color.
+        </p>
+        <div class="bg-gray-900 p-4 rounded-lg">
+          <EChartsScatterChart
+            client:load
+            traces={scatterSolidColorTraces}
+            title="Solid Color Groups"
+            xAxisLabel="X Position"
+            yAxisLabel="Y Position"
+            symbolSize={8}
+            height={400}
+          />
+        </div>
+      </section>
+
+      <!-- Scatter Chart with Trace Format (Color Mapping) -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-blue-300">
+          Scatter Chart with Trace Format (Color Mapping)
+        </h2>
+        <p class="text-gray-300">
+          Using Trace format with data key for color mapping. When color is a
+          data key (e.g., "temperature"), points are colored by that field using
+          a blue-white-red gradient.
+        </p>
+        <div class="bg-gray-900 p-4 rounded-lg">
+          <EChartsScatterChart
+            client:load
+            traces={scatterColorTraces}
+            title="Temperature Distribution"
+            xAxisLabel="X Position"
+            yAxisLabel="Y Position"
+            symbolSize={10}
+            height={400}
+          />
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="space-y-4 bg-gray-900 p-6 rounded-lg">
+        <h2 class="text-2xl font-bold text-blue-300">Key Features</h2>
+        <ul class="space-y-2 text-gray-300">
+          <li class="flex items-start">
+            <span class="text-green-400 mr-3">✓</span>
+            <span
+              ><strong>Single/Double Axis Zoom:</strong> Mouse wheel zoom on X-axis,
+              independent Y-axis zoom</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-400 mr-3">✓</span>
+            <span
+              ><strong>High Customizability:</strong> Full control over colors, fonts,
+              sizes, and animations</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-400 mr-3">✓</span>
+            <span
+              ><strong>Theme Matching:</strong> Automatically uses your CSS variables
+              for consistent styling</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-400 mr-3">✓</span>
+            <span
+              ><strong>Smooth Animations:</strong> 300ms default animation duration,
+              fully customizable</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-400 mr-3">✓</span>
+            <span
+              ><strong>Responsive Design:</strong> Automatically resizes with window,
+              works on mobile</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-400 mr-3">✓</span>
+            <span
+              ><strong>Pan Support:</strong> Click and drag to move data around the
+              chart</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-400 mr-3">✓</span>
+            <span
+              ><strong>Interactive Tooltips:</strong> Hover to see detailed data information</span
+            >
+          </li>
+        </ul>
+      </section>
+
+      <!-- Usage Instructions -->
+      <section class="space-y-4 bg-gray-900 p-6 rounded-lg">
+        <h2 class="text-2xl font-bold text-blue-300">How to Use</h2>
+        <div class="space-y-3 text-gray-300">
+          <div>
+            <h3 class="font-bold text-blue-200 mb-2">Zoom In/Out</h3>
+            <p>
+              Scroll your mouse wheel over the chart to zoom in and out on the
+              X-axis.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-blue-200 mb-2">Pan (Move)</h3>
+            <p>Click and drag anywhere on the chart to move the data around.</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-blue-200 mb-2">Slider Zoom</h3>
+            <p>
+              Use the slider at the bottom of the chart to zoom the X-axis
+              range.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-blue-200 mb-2">Reset</h3>
+            <p>
+              Double-click on the chart to reset zoom and pan to default view.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Migration Info -->
+      <section
+        class="space-y-4 bg-blue-900 bg-opacity-30 p-6 rounded-lg border border-blue-500"
+      >
+        <h2 class="text-2xl font-bold text-blue-300">Migration Information</h2>
+        <p class="text-gray-300">
+          For detailed migration information, see <code
+            class="bg-gray-800 px-2 py-1 rounded"
+            >ECHARTS_MIGRATION_GUIDE.md</code
+          >
+        </p>
+        <p class="text-gray-300">
+          New components are located in <code
+            class="bg-gray-800 px-2 py-1 rounded">src/components/charts/</code
+          >
+        </p>
+        <p class="text-gray-300">
+          Theme configuration is in <code class="bg-gray-800 px-2 py-1 rounded"
+            >src/utils/echartsTheme.ts</code
+          >
+        </p>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  code {
+    font-family: "Courier New", monospace;
+  }
+</style>

@@ -1,0 +1,264 @@
+---
+import StandardPageLayout from "../layouts/StandardPageLayout.astro";
+import FeaturedBlogCard from "../components/FeaturedBlogCard.astro";
+import { getCollection, render } from "astro:content";
+import { getReadingTime } from "../utils/readingTime";
+
+// Reading time configuration (words per minute)
+const READING_TIME_CONFIG = {
+  wordsPerMinute: 200,
+  minReadingTime: 1,
+};
+
+// Get all published blog posts
+const blogPosts = await getCollection("blog", ({ data }) => data.published);
+
+// Enrich posts with reading time
+const enrichedPosts = await Promise.all(
+  blogPosts.map(async (post) => {
+    const { body } = post;
+    const readingTime = getReadingTime(body, READING_TIME_CONFIG);
+    return {
+      ...post,
+      readingTime,
+    };
+  })
+);
+
+// Sort by date (newest first)
+const sortedPosts = enrichedPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+// Get unique tags
+const allTags = Array.from(
+  new Set(sortedPosts.flatMap((p) => p.data.tags || [])),
+).sort();
+---
+
+<StandardPageLayout>
+  {/* Page Header */}
+  <section class="py-8 md:py-12 border-b border-theme-border/20">
+    <h1 class="text-4xl md:text-5xl font-bold text-theme-foreground mb-4">
+      Blog
+    </h1>
+    <p class="text-lg text-theme-text/80 max-w-2xl">
+      Thoughts on web development, design, technology, and everything in
+      between. I share insights, tutorials, and lessons learned from my
+      projects.
+    </p>
+  </section>
+
+  {/* Search and Filter Section */}
+  <section class="py-8 md:py-12 border-b border-theme-border/20">
+    {/* Search Bar */}
+    <div class="mb-6">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search blog posts..."
+        class="w-full px-4 py-3 rounded-xl bg-theme-background/50 border border-theme-border/50 text-theme-text placeholder:text-theme-text/40 focus:outline-none focus:ring-2 focus:ring-theme-primary transition-all duration-200"
+      />
+    </div>
+
+    {/* Filter Buttons */}
+    {
+      allTags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          <button
+            class="filter-btn px-4 py-2 rounded-full font-medium transition-all duration-200 bg-gradient-to-r from-theme-accent to-theme-accent text-white shadow-lg shadow-theme-accent/30"
+            data-filter="all"
+          >
+            All Posts
+          </button>
+          {allTags.map((tag) => (
+            <button
+              class="filter-btn px-4 py-2 rounded-full font-medium transition-all duration-200 border-2 border-theme-accent text-theme-accent hover:bg-theme-accent/10"
+              data-filter={tag}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      )
+    }
+  </section>
+
+  {/* Results Counter */}
+  <section class="py-4">
+    <p id="resultsCounter" class="text-sm text-theme-text/60">
+      Showing {sortedPosts.length} post{sortedPosts.length !== 1 ? "s" : ""}
+    </p>
+  </section>
+
+  {/* Blog Posts Grid */}
+  <section class="py-12 md:py-16">
+    {
+      sortedPosts.length > 0 ? (
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {sortedPosts.map((post) => (
+            <article
+              class="blog-card"
+              data-tags={post.data.tags?.join(",")}
+              data-title={post.data.title.toLowerCase()}
+              data-description={post.data.description.toLowerCase()}
+            >
+              <FeaturedBlogCard
+                title={post.data.title}
+                description={post.data.description}
+                date={post.data.date}
+                href={`/posts/${post.id}`}
+                readingTime={post.readingTime}
+              />
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-lg text-theme-text/60">
+            No blog posts yet. Check back soon!
+          </p>
+        </div>
+      )
+    }
+  </section>
+
+  {/* No Results Message */}
+  <section id="noResults" class="hidden py-12 text-center">
+    <p class="text-lg text-theme-text/60">
+      No posts match your search or filter. Try adjusting your criteria.
+    </p>
+  </section>
+
+  {/* CTA Section */}
+  <section class="py-12 md:py-16 border-t border-theme-border/20">
+    <div
+      class="rounded-2xl border border-theme-border/30 bg-gradient-to-r from-theme-accent/10 to-theme-accent/10 p-8 md:p-12 text-center"
+    >
+      <h2 class="text-3xl font-bold text-theme-foreground mb-4">
+        Subscribe for Updates
+      </h2>
+      <p class="text-lg text-theme-text/80 mb-8 max-w-2xl mx-auto">
+        Get notified when I publish new articles, tutorials, and insights about
+        web development and technology.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input
+          type="email"
+          placeholder="your@email.com"
+          class="flex-1 px-4 py-3 rounded-xl bg-theme-background/50 border border-theme-border/50 text-theme-text placeholder:text-theme-text/40 focus:outline-none focus:ring-2 focus:ring-theme-primary transition-all duration-200"
+          required
+        />
+        <button
+          type="submit"
+          class="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-theme-accent to-theme-accent hover:shadow-lg hover:shadow-theme-accent/30 transition-all duration-300 hover:scale-105 whitespace-nowrap"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
+</StandardPageLayout>
+
+<script>
+  // Combined search and filter functionality
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  const blogCards = document.querySelectorAll(".blog-card");
+  const searchInput = document.getElementById(
+    "searchInput",
+  ) as HTMLInputElement;
+  const noResults = document.getElementById("noResults");
+  const resultsCounter = document.getElementById("resultsCounter");
+
+  let currentFilter = "all";
+  let currentSearch = "";
+
+  // Update results display
+  const updateResults = () => {
+    let visibleCount = 0;
+
+    blogCards.forEach((card) => {
+      const tags = card.getAttribute("data-tags")?.split(",") || [];
+      const title = card.getAttribute("data-title") || "";
+      const description = card.getAttribute("data-description") || "";
+
+      // Check filter
+      const passesFilter =
+        currentFilter === "all" || tags.includes(currentFilter);
+
+      // Check search
+      const searchTerm = currentSearch.toLowerCase();
+      const passesSearch =
+        searchTerm === "" ||
+        title.includes(searchTerm) ||
+        description.includes(searchTerm);
+
+      // Show/hide card
+      if (passesFilter && passesSearch) {
+        (card as HTMLElement).style.display = "block";
+        visibleCount++;
+      } else {
+        (card as HTMLElement).style.display = "none";
+      }
+    });
+
+    // Update no results message
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    // Update counter
+    if (resultsCounter) {
+      resultsCounter.textContent = `Showing ${visibleCount} post${visibleCount !== 1 ? "s" : ""}`;
+    }
+  };
+
+  // Filter button click handler
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      currentFilter = btn.getAttribute("data-filter") || "all";
+
+      // Update active button styling
+      filterBtns.forEach((b) => {
+        b.classList.remove(
+          "bg-gradient-to-r",
+          "from-theme-primary",
+          "to-theme-accent",
+          "text-white",
+          "shadow-lg",
+          "shadow-theme-primary/30",
+        );
+        b.classList.add(
+          "border-2",
+          "border-theme-accent",
+          "text-theme-accent",
+          "hover:bg-theme-accent/10",
+        );
+      });
+      btn.classList.remove(
+        "border-2",
+        "border-theme-accent",
+        "text-theme-accent",
+        "hover:bg-theme-accent/10",
+      );
+      btn.classList.add(
+        "bg-gradient-to-r",
+        "from-theme-primary",
+        "to-theme-accent",
+        "text-white",
+        "shadow-lg",
+        "shadow-theme-primary/30",
+      );
+
+      updateResults();
+    });
+  });
+
+  // Search input handler
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      currentSearch = (e.target as HTMLInputElement).value;
+      updateResults();
+    });
+  }
+</script>

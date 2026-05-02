@@ -1,0 +1,36 @@
+---
+// Container component - Constrained width wrapper for page content
+// Provides consistent max-width and padding across all pages
+
+export interface Props {
+  class?: string;
+  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
+  padding?: "none" | "sm" | "md" | "lg";
+}
+
+const { class: className = "", maxWidth = "lg", padding = "md" } = Astro.props;
+
+// Map maxWidth to Tailwind classes
+const maxWidthMap = {
+  sm: "max-w-2xl",
+  md: "max-w-4xl",
+  lg: "max-w-6xl",
+  xl: "max-w-7xl",
+  "2xl": "max-w-full",
+  full: "w-full",
+};
+
+// Map padding to Tailwind classes
+const paddingMap = {
+  none: "px-0",
+  sm: "px-4",
+  md: "px-4 md:px-6",
+  lg: "px-4 md:px-8",
+};
+
+const containerClass = `w-full ${maxWidth !== "full" ? "mx-auto" : ""} ${maxWidthMap[maxWidth]} ${paddingMap[padding]} ${className}`;
+---
+
+<div class={containerClass}>
+  <slot />
+</div>

@@ -1,0 +1,30 @@
+{
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "items": [
+        "Add your languages here",
+        "e.g., JavaScript, Python, TypeScript"
+      ]
+    },
+    {
+      "category": "Frontend",
+      "items": ["Add frontend technologies", "e.g., React, Vue, Astro"]
+    },
+    {
+      "category": "Backend",
+      "items": ["Add backend technologies", "e.g., Node.js, Python, Go"]
+    },
+    {
+      "category": "Tools & Platforms",
+      "items": ["Add tools and platforms", "e.g., Git, Docker, AWS"]
+    },
+    {
+      "category": "Other Skills",
+      "items": [
+        "Add any other relevant skills",
+        "e.g., Data Analysis, UI/UX Design"
+      ]
+    }
+  ]
+}

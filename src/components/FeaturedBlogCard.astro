@@ -1,0 +1,100 @@
+---
+// FeaturedBlogCard component - Display a featured blog post
+// Entire card is clickable
+
+export interface Props {
+  title: string;
+  description: string;
+  date: string;
+  href: string;
+  image?: string;
+  readingTime?: string;
+}
+
+const {
+  title,
+  description,
+  date,
+  href,
+  image,
+  readingTime = "5 min read",
+} = Astro.props;
+
+// Format date
+const formatDate = (dateStr: string): string => {
+  try {
+    const [day, month, year] = dateStr.split("-");
+    const dateObj = new Date(`${year}-${month}-${day}`);
+    return dateObj.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  } catch {
+    return dateStr;
+  }
+};
+---
+
+<a
+  href={href}
+  class="group relative overflow-hidden rounded-2xl border border-theme-border/30 bg-gradient-to-br from-theme-accent/5 to-theme-secondary/5 backdrop-blur-sm transition-all duration-300 hover:border-theme-accent/50 hover:shadow-lg hover:shadow-theme-accent/20 h-full block"
+>
+  {/* Image */}
+  {
+    image && (
+      <div class="relative h-48 overflow-hidden bg-theme-accent/10">
+        <img
+          src={image}
+          alt={title}
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
+    )
+  }
+
+  {/* Content */}
+  <article class="p-6 md:p-8 flex flex-col h-full">
+    {/* Meta */}
+    <div
+      class="mb-4 flex flex-wrap items-center gap-3 text-sm text-theme-text/60"
+    >
+      <time datetime={date}>{formatDate(date)}</time>
+      <span class="text-theme-accent">{readingTime}</span>
+    </div>
+
+    {/* Title */}
+    <h3
+      class="mb-3 text-2xl md:text-3xl font-bold text-theme-accent group-hover:text-theme-primary transition-colors duration-200"
+    >
+      {title}
+    </h3>
+
+    {/* Description */}
+    <p
+      class="mb-6 text-base text-theme-text/80 leading-relaxed line-clamp-3 flex-grow"
+    >
+      {description}
+    </p>
+
+    {/* CTA */}
+    <div
+      class="inline-flex items-center gap-2 text-theme-accent font-semibold group-hover:gap-3 transition-all duration-200"
+    >
+      Read Article
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"></path>
+      </svg>
+    </div>
+  </article>
+</a>
