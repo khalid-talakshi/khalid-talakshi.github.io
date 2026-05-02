@@ -11,8 +11,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   integrations: [react(), mdx()],
 
-  site: 'http://khalidtalakshi.com',
-  base: '/khalid-talakshi.github.com',
+  site: "https://khalidtalakshi.com",
   vite: {
     plugins: [tailwindcss()],
   },
