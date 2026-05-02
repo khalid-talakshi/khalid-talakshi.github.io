@@ -1,0 +1,124 @@
+---
+// RelatedPosts component - Display related blog posts based on shared tags
+// Shows up to 3 related posts at the bottom of a blog post
+
+import FeaturedBlogCard from "./FeaturedBlogCard.astro";
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  currentPostId: string;
+  currentTags: string[];
+  allPosts: CollectionEntry<"blog">[];
+  limit?: number;
+}
+
+const { currentPostId, currentTags, allPosts, limit = 3 } = Astro.props;
+
+// Filter and score related posts
+const relatedPosts = allPosts
+  .filter((post) => post.id !== currentPostId && post.data.published)
+  .map((post) => {
+    // Calculate relevance score based on shared tags
+    const sharedTags = (post.data.tags || []).filter((tag) =>
+      currentTags.includes(tag),
+    );
+    return {
+      post,
+      score: sharedTags.length,
+    };
+  })
+  .filter((item) => item.score > 0) // Only include posts with at least one shared tag
+  .sort((a, b) => {
+    // Sort by score (descending), then by date (newest first)
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
+    return (
+      new Date(b.post.data.date).getTime() -
+      new Date(a.post.data.date).getTime()
+    );
+  })
+  .slice(0, limit)
+  .map((item) => item.post);
+---
+
+{
+  relatedPosts.length > 0 && (
+    <section class="related-posts-section">
+      <div class="related-posts-header">
+        <h2 class="related-posts-title">Related Posts</h2>
+        <p class="related-posts-subtitle">
+          Explore more articles on similar topics
+        </p>
+      </div>
+
+      <div class="related-posts-grid">
+        {relatedPosts.map((post) => (
+          <FeaturedBlogCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            href={`/posts/${post.id}`}
+            readingTime={`${Math.ceil(post.body.split(/\s+/).length / 200)} min read`}
+          />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .related-posts-section {
+    border-top: 1px solid var(--color-theme-border);
+    border-top-opacity: 0.2;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .related-posts-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+  }
+
+  .related-posts-header {
+    margin-bottom: 2rem;
+  }
+
+  .related-posts-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--color-theme-foreground);
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .related-posts-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .related-posts-subtitle {
+    font-size: 1.125rem;
+    color: color-mix(in oklab, var(--color-theme-text) 70%, transparent);
+  }
+
+  .related-posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .related-posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .related-posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

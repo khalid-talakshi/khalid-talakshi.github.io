@@ -22,20 +22,89 @@ const experience = defineCollection({
     role: z.string(),
     startDate: z.string(),
     endDate: z.string().optional(),
-    description: z.string(),
+    hidden: z.boolean().optional().default(false),
+    description: z.string().optional(),
     technologies: z.array(z.string()).optional(),
   }),
 });
 
 const education = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/education" }),
-  schema: z.object({
-    school: z.string(),
-    degree: z.string(),
-    field: z.string(),
-    graduationDate: z.string(),
-    description: z.string().optional(),
-  }),
+  schema: z
+    .object({
+      kind: z.enum(["formal", "certificate"]).optional().default("formal"),
+      hidden: z.boolean().optional().default(false),
+      school: z.string().optional(),
+      degree: z.string().optional(),
+      field: z.string().optional(),
+      graduationDate: z.string().optional(),
+      title: z.string().optional(),
+      issuer: z.string().optional(),
+      issueDate: z.string().optional(),
+      credentialId: z.string().optional(),
+      credentialUrl: z.string().url().optional(),
+    })
+    .superRefine((data, ctx) => {
+      if (data.kind === "certificate") {
+        if (!data.title) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Certificate entries require a title",
+            path: ["title"],
+          });
+        }
+
+        if (!data.issuer) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Certificate entries require an issuer",
+            path: ["issuer"],
+          });
+        }
+
+        if (!data.issueDate) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Certificate entries require an issueDate",
+            path: ["issueDate"],
+          });
+        }
+
+        return;
+      }
+
+      if (!data.school) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Formal education entries require a school",
+          path: ["school"],
+        });
+      }
+
+      if (!data.degree) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Formal education entries require a degree",
+          path: ["degree"],
+        });
+      }
+
+      if (!data.field) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Formal education entries require a field",
+          path: ["field"],
+        });
+      }
+
+      if (!data.graduationDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Formal education entries require a graduationDate",
+          path: ["graduationDate"],
+        });
+      }
+    }),
 });
 
 const projects = defineCollection({

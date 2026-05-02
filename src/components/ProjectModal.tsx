@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectLinkIcon from "./ProjectLinkIcon";
 
 interface ProjectLink {
@@ -8,6 +8,7 @@ interface ProjectLink {
 }
 
 interface ProjectModalProps {
+  projectId: string;
   title: string;
   description: string;
   type?: "app" | "paper" | "design" | "tool" | "other";
@@ -118,6 +119,7 @@ const getProjectTypeIcon = (
 };
 
 export default function ProjectModal({
+  projectId,
   title,
   description,
   type,
@@ -127,6 +129,15 @@ export default function ProjectModal({
   children,
 }: ProjectModalProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const targetProject = url.searchParams.get("project");
+
+    if (targetProject === projectId) {
+      setIsOpen(true);
+    }
+  }, [projectId]);
 
   return (
     <>

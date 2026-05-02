@@ -1,11 +1,59 @@
 ---
+import "../styles/global.css";
+import "../styles/blog.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
 import BaseLayout from "./BaseLayout.astro";
+
+export interface Props {
+  hasSidebar?: boolean;
+}
+
+const { hasSidebar = false } = Astro.props;
 ---
 
 <BaseLayout>
+  <Navbar currentPath={Astro.url.pathname} />
   <div class="w-full mx-auto mt-8 py-12 md:py-16">
-    <div class="w-full sm:w-[95%] md:w-[85%] lg:w-[70%] mx-auto px-4 sm:px-0">
-      <slot />
+    <div
+      class={`w-full sm:w-[95%] mx-auto px-4 sm:px-0 ${
+        hasSidebar
+          ? "lg:w-[90%] grid grid-cols-1 lg:grid-cols-3 gap-8 lg:items-start"
+          : "md:w-[85%] lg:w-[70%]"
+      }`}
+    >
+      {
+        hasSidebar ? (
+          <>
+            <div class="lg:col-span-1 sidebar-wrapper">
+              <slot name="sidebar" />
+            </div>
+            <div class="lg:col-span-2">
+              <slot name="content" />
+            </div>
+          </>
+        ) : (
+          <slot />
+        )
+      }
     </div>
   </div>
+  <Footer />
 </BaseLayout>
+
+<style>
+  .sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .sidebar-wrapper {
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+      height: fit-content;
+    }
+  }
+</style>

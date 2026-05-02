@@ -25,38 +25,38 @@ const DEFAULT_CONFIG: Required<ReadingTimeConfig> = {
  */
 export function extractWrittenContent(content: string | undefined): string {
   if (!content) {
-    return '';
+    return "";
   }
 
   let text = content;
 
   // Remove frontmatter (YAML between ---)
-  text = text.replace(/^---[\s\S]*?---\n/, '');
+  text = text.replace(/^---[\s\S]*?---\n/, "");
 
   // Remove JSX/component syntax (e.g., <Component prop="value" />)
-  text = text.replace(/<[A-Z][^>]*>/g, '');
-  text = text.replace(/<\/[A-Z][^>]*>/g, '');
+  text = text.replace(/<[A-Z][^>]*>/g, "");
+  text = text.replace(/<\/[A-Z][^>]*>/g, "");
 
   // Remove HTML comments
-  text = text.replace(/<!--[\s\S]*?-->/g, '');
+  text = text.replace(/<!--[\s\S]*?-->/g, "");
 
   // Remove code blocks (```...```)
-  text = text.replace(/```[\s\S]*?```/g, '');
+  text = text.replace(/```[\s\S]*?```/g, "");
 
   // Remove inline code markers
-  text = text.replace(/`[^`]*`/g, '');
+  text = text.replace(/`[^`]*`/g, "");
 
   // Remove markdown links [text](url) -> text
-  text = text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
+  text = text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1");
 
   // Remove markdown images ![alt](url)
-  text = text.replace(/!\[([^\]]*)\]\([^)]*\)/g, '');
+  text = text.replace(/!\[([^\]]*)\]\([^)]*\)/g, "");
 
   // Remove markdown formatting
-  text = text.replace(/[*_~#\-\[\]()]/g, ' ');
+  text = text.replace(/[*_~#\-\[\]()]/g, " ");
 
   // Remove extra whitespace
-  text = text.replace(/\s+/g, ' ').trim();
+  text = text.replace(/\s+/g, " ").trim();
 
   return text;
 }
@@ -80,15 +80,13 @@ export function countWords(text: string): number {
  */
 export function calculateReadingTimeMinutes(
   content: string | undefined,
-  config?: ReadingTimeConfig
+  config?: ReadingTimeConfig,
 ): number {
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
 
   const cleanedContent = extractWrittenContent(content);
   const wordCount = countWords(cleanedContent);
-  const readingTimeMinutes = Math.ceil(
-    wordCount / finalConfig.wordsPerMinute
-  );
+  const readingTimeMinutes = Math.ceil(wordCount / finalConfig.wordsPerMinute);
 
   return Math.max(readingTimeMinutes, finalConfig.minReadingTime);
 }
@@ -101,7 +99,7 @@ export function calculateReadingTimeMinutes(
  */
 export function formatReadingTime(minutes: number): string {
   if (minutes === 1) {
-    return '1 min read';
+    return "1 min read";
   }
   return `${minutes} min read`;
 }
@@ -115,7 +113,7 @@ export function formatReadingTime(minutes: number): string {
  */
 export function getReadingTime(
   content: string | undefined,
-  config?: ReadingTimeConfig
+  config?: ReadingTimeConfig,
 ): string {
   const minutes = calculateReadingTimeMinutes(content, config);
   return formatReadingTime(minutes);
@@ -130,7 +128,7 @@ export function getReadingTime(
  */
 export function getReadingTimeDetails(
   content: string | undefined,
-  config?: ReadingTimeConfig
+  config?: ReadingTimeConfig,
 ): {
   minutes: number;
   formatted: string;

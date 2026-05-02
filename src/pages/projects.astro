@@ -4,7 +4,9 @@ import ProjectModal from "../components/ProjectModal";
 import { getCollection } from "astro:content";
 
 // Get all projects
-const projects = (await getCollection("projects")).filter((x) => x.data.hidden != true);
+const projects = (await getCollection("projects")).filter(
+  (x) => x.data.hidden != true,
+);
 
 // Get unique tags, technologies, and types
 const allTags = Array.from(
@@ -33,136 +35,183 @@ const allTypes = Array.from(
   </section>
 
   {/* Filter Section */}
-  <section class="py-6 md:py-8 border-b border-theme-border/20">
-    <div class="space-y-3">
-      {/* All Projects Button */}
-      <div class="flex items-center gap-2">
-        <button
-          class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-gradient-to-r from-theme-accent to-theme-accent text-white shadow-lg shadow-theme-accent/30"
-          data-filter="all"
-          data-filter-type="all"
-        >
-          All Projects
-        </button>
-        <span class="text-xs text-theme-text/50">Reset filters</span>
+  <section class="py-5 md:py-6 border-b border-theme-border/20">
+    <div
+      class="rounded-2xl border border-theme-border/30 bg-theme-background/30 p-3 md:p-4 space-y-3"
+    >
+      <div class="flex flex-col gap-3 md:flex-row md:items-center">
+        <div class="relative flex-1">
+          <svg
+            class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-theme-text/40"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+          <input
+            type="text"
+            id="projectSearchInput"
+            placeholder="Search projects..."
+            class="w-full rounded-xl border border-theme-border/50 bg-theme-background/50 py-2.5 pl-9 pr-3 text-sm text-theme-text placeholder:text-theme-text/40 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-theme-primary"
+          />
+        </div>
+
+        <div class="flex items-center gap-2 md:justify-end">
+          <button
+            class="filter-btn inline-flex items-center rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200 bg-gradient-to-r from-theme-accent to-theme-accent text-white shadow-lg shadow-theme-accent/30"
+            data-filter="all"
+            data-filter-type="all"
+          >
+            All Projects
+          </button>
+          <button
+            id="toggleProjectFilters"
+            class="inline-flex items-center gap-2 rounded-full border border-theme-border/50 px-3 py-1.5 text-xs font-semibold text-theme-text hover:border-theme-accent/40 hover:text-theme-accent transition-colors"
+            type="button"
+            aria-expanded="false"
+            aria-controls="projectAdvancedFilters"
+          >
+            Advanced filters
+            <svg
+              class="h-3.5 w-3.5 transition-transform duration-200"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Type Filters */}
-      {
-        allTypes.length > 0 && (
-          <div class="filter-group">
-            <button
-              class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-primary hover:text-theme-primary/80 transition-colors"
-              data-group="type"
-            >
-              <svg
-                class="h-4 w-4 transition-transform duration-200"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+      <div id="projectAdvancedFilters" class="hidden space-y-3">
+        {/* Type Filters */}
+        {
+          allTypes.length > 0 && (
+            <div class="filter-group">
+              <button
+                class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-primary hover:text-theme-primary/80 transition-colors"
+                data-group="type"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-              Type
-            </button>
-            <div class="filter-group-content flex flex-wrap gap-2 pl-6 mt-2">
-              {allTypes.map((type) => (
-                <button
-                  class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-primary text-theme-primary hover:bg-theme-primary/10"
-                  data-filter={type}
-                  data-filter-type="type"
-                  title={`Filter by type: ${type}`}
+                <svg
+                  class="h-4 w-4 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {type}
-                </button>
-              ))}
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+                Type
+              </button>
+              <div class="filter-group-content mt-2 flex flex-wrap gap-2 pl-6">
+                {allTypes.map((type) => (
+                  <button
+                    class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-primary text-theme-primary hover:bg-theme-primary/10"
+                    data-filter={type}
+                    data-filter-type="type"
+                    title={`Filter by type: ${type}`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
 
-      {/* Technology Filters */}
-      {
-        allTechnologies.length > 0 && (
-          <div class="filter-group">
-            <button
-              class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-secondary hover:text-theme-secondary/80 transition-colors"
-              data-group="technology"
-            >
-              <svg
-                class="h-4 w-4 transition-transform duration-200"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+        {/* Technology Filters */}
+        {
+          allTechnologies.length > 0 && (
+            <div class="filter-group">
+              <button
+                class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-secondary hover:text-theme-secondary/80 transition-colors"
+                data-group="technology"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-              Technology
-            </button>
-            <div class="filter-group-content flex flex-wrap gap-2 pl-6 mt-2">
-              {allTechnologies.map((tech) => (
-                <button
-                  class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-secondary text-theme-secondary hover:bg-theme-secondary/10"
-                  data-filter={tech}
-                  data-filter-type="technology"
-                  title={`Filter by technology: ${tech}`}
+                <svg
+                  class="h-4 w-4 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {tech}
-                </button>
-              ))}
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+                Technology
+              </button>
+              <div class="filter-group-content mt-2 flex flex-wrap gap-2 pl-6">
+                {allTechnologies.map((tech) => (
+                  <button
+                    class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-secondary text-theme-secondary hover:bg-theme-secondary/10"
+                    data-filter={tech}
+                    data-filter-type="technology"
+                    title={`Filter by technology: ${tech}`}
+                  >
+                    {tech}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
 
-      {/* Tag Filters */}
-      {
-        allTags.length > 0 && (
-          <div class="filter-group">
-            <button
-              class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-accent hover:text-theme-accent/80 transition-colors"
-              data-group="tag"
-            >
-              <svg
-                class="h-4 w-4 transition-transform duration-200"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+        {/* Tag Filters */}
+        {
+          allTags.length > 0 && (
+            <div class="filter-group">
+              <button
+                class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-accent hover:text-theme-accent/80 transition-colors"
+                data-group="tag"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-              Tags
-            </button>
-            <div class="filter-group-content flex flex-wrap gap-2 pl-6 mt-2">
-              {allTags.map((tag) => (
-                <button
-                  class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-accent text-theme-accent hover:bg-theme-accent/10"
-                  data-filter={tag}
-                  data-filter-type="tag"
-                  title={`Filter by tag: ${tag}`}
+                <svg
+                  class="h-4 w-4 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {tag}
-                </button>
-              ))}
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+                Tags
+              </button>
+              <div class="filter-group-content mt-2 flex flex-wrap gap-2 pl-6">
+                {allTags.map((tag) => (
+                  <button
+                    class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-accent text-theme-accent hover:bg-theme-accent/10"
+                    data-filter={tag}
+                    data-filter-type="tag"
+                    title={`Filter by tag: ${tag}`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </div>
   </section>
 
@@ -174,6 +223,7 @@ const allTypes = Array.from(
           {projects.map((project) => (
             <ProjectModal
               client:load
+              projectId={project.id}
               title={project.data.title}
               description={project.data.description}
               type={project.data.type}
@@ -266,6 +316,22 @@ const allTypes = Array.from(
 </StandardPageLayout>
 
 <script>
+  // Collapsible top-level advanced filter panel
+  const toggleProjectFilters = document.getElementById("toggleProjectFilters");
+  const projectAdvancedFilters = document.getElementById(
+    "projectAdvancedFilters",
+  );
+
+  if (toggleProjectFilters && projectAdvancedFilters) {
+    toggleProjectFilters.addEventListener("click", () => {
+      const isExpanded =
+        toggleProjectFilters.getAttribute("aria-expanded") === "true";
+      toggleProjectFilters.setAttribute("aria-expanded", String(!isExpanded));
+      projectAdvancedFilters.classList.toggle("hidden");
+      toggleProjectFilters.querySelector("svg")?.classList.toggle("rotate-180");
+    });
+  }
+
   // Collapsible filter groups
   const filterGroupToggles = document.querySelectorAll(".filter-group-toggle");
   filterGroupToggles.forEach((toggle) => {
@@ -282,12 +348,64 @@ const allTypes = Array.from(
   // Multi-field filter functionality with AND between categories, OR within categories
   const filterBtns = document.querySelectorAll(".filter-btn");
   const projectCards = document.querySelectorAll(".project-card");
+  const projectSearchInput = document.getElementById(
+    "projectSearchInput",
+  ) as HTMLInputElement;
 
   // Track active filters by type (can have multiple per category)
   const activeFilters = {
     type: [],
     technology: [],
     tag: [],
+  };
+  let currentSearch = "";
+
+  const updateProjectResults = () => {
+    projectCards.forEach((card) => {
+      let shouldShow = true;
+
+      if (activeFilters.type.length > 0) {
+        const cardType = card.getAttribute("data-type");
+        if (!activeFilters.type.includes(cardType)) {
+          shouldShow = false;
+        }
+      }
+
+      if (shouldShow && activeFilters.technology.length > 0) {
+        const cardTechs =
+          card
+            .getAttribute("data-technologies")
+            ?.split(",")
+            .filter((t) => t) || [];
+        const hasMatchingTech = activeFilters.technology.some((tech) =>
+          cardTechs.includes(tech),
+        );
+        if (!hasMatchingTech) {
+          shouldShow = false;
+        }
+      }
+
+      if (shouldShow && activeFilters.tag.length > 0) {
+        const cardTags =
+          card
+            .getAttribute("data-tags")
+            ?.split(",")
+            .filter((t) => t) || [];
+        const hasMatchingTag = activeFilters.tag.some((tag) =>
+          cardTags.includes(tag),
+        );
+        if (!hasMatchingTag) {
+          shouldShow = false;
+        }
+      }
+
+      if (shouldShow && currentSearch.trim() !== "") {
+        const searchableText = (card.textContent || "").toLowerCase();
+        shouldShow = searchableText.includes(currentSearch.toLowerCase());
+      }
+
+      card.style.display = shouldShow ? "block" : "none";
+    });
   };
 
   filterBtns.forEach((btn) => {
@@ -420,50 +538,14 @@ const allTypes = Array.from(
         }
       }
 
-      // Filter projects: AND between categories, OR within categories
-      projectCards.forEach((card) => {
-        let shouldShow = true;
-
-        // Check type filter (OR: match any active type)
-        if (activeFilters.type.length > 0) {
-          const cardType = card.getAttribute("data-type");
-          if (!activeFilters.type.includes(cardType)) {
-            shouldShow = false;
-          }
-        }
-
-        // Check technology filter (OR: match any active technology)
-        if (shouldShow && activeFilters.technology.length > 0) {
-          const cardTechs =
-            card
-              .getAttribute("data-technologies")
-              ?.split(",")
-              .filter((t) => t) || [];
-          const hasMatchingTech = activeFilters.technology.some((tech) =>
-            cardTechs.includes(tech),
-          );
-          if (!hasMatchingTech) {
-            shouldShow = false;
-          }
-        }
-
-        // Check tag filter (OR: match any active tag)
-        if (shouldShow && activeFilters.tag.length > 0) {
-          const cardTags =
-            card
-              .getAttribute("data-tags")
-              ?.split(",")
-              .filter((t) => t) || [];
-          const hasMatchingTag = activeFilters.tag.some((tag) =>
-            cardTags.includes(tag),
-          );
-          if (!hasMatchingTag) {
-            shouldShow = false;
-          }
-        }
-
-        card.style.display = shouldShow ? "block" : "none";
-      });
+      updateProjectResults();
     });
   });
+
+  if (projectSearchInput) {
+    projectSearchInput.addEventListener("input", (event) => {
+      currentSearch = (event.target as HTMLInputElement).value;
+      updateProjectResults();
+    });
+  }
 </script>

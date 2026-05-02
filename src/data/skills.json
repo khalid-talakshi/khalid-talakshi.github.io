@@ -2,22 +2,19 @@
   "skills": [
     {
       "category": "Programming Languages",
-      "items": [
-        "Add your languages here",
-        "e.g., JavaScript, Python, TypeScript"
-      ]
+      "items": ["R", "Python", "JavaScript", "Ruby"]
     },
     {
       "category": "Frontend",
-      "items": ["Add frontend technologies", "e.g., React, Vue, Astro"]
+      "items": ["React", "Tailwind", "Astro"]
     },
     {
       "category": "Backend",
-      "items": ["Add backend technologies", "e.g., Node.js, Python, Go"]
+      "items": ["Ruby on Rails", "Django", "Node.JS", "Pyramid", "Flask"]
     },
     {
       "category": "Tools & Platforms",
-      "items": ["Add tools and platforms", "e.g., Git, Docker, AWS"]
+      "items": ["Git", "Docker", "AWS", "Azure"]
     },
     {
       "category": "Other Skills",

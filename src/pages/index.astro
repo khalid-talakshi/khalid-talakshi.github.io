@@ -47,7 +47,7 @@ const featuredProject = projects.find((p) => p.data.featured) || projects[0];
             description={featuredBlog.data.description}
             date={featuredBlog.data.date}
             author={featuredBlog.data.author}
-            href={`/posts/${featuredBlog.slug}`}
+            href={`/posts/${featuredBlog.id}`}
             readingTime="8 min read"
           />
         )
@@ -61,7 +61,7 @@ const featuredProject = projects.find((p) => p.data.featured) || projects[0];
             description={featuredProject.data.description}
             tags={featuredProject.data.tags}
             technologies={featuredProject.data.technologies}
-            href={`/projects/${featuredProject.slug}`}
+            href={`/projects?project=${encodeURIComponent(featuredProject.id)}`}
           />
         )
       }

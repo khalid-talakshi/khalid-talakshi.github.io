@@ -1,0 +1,581 @@
+---
+// TableOfContents component - Sticky sidebar with heading navigation
+// Displays h2 and h3 headings with smooth scroll navigation
+// NOTE: TOC is populated on the client side after content is rendered
+
+export interface Props {
+  postTitle: string;
+}
+
+const { postTitle } = Astro.props;
+---
+
+<nav class="toc-sidebar" aria-label="Table of contents">
+  <div class="toc-container">
+    <h3 class="toc-title">On this page</h3>
+    <button
+      id="toc-mobile-toggle"
+      class="toc-mobile-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="toc-list"
+    >
+      <span class="toc-mobile-toggle-label">On this page</span>
+      <span class="toc-mobile-toggle-icon" aria-hidden="true">⌄</span>
+    </button>
+    <ul class="toc-list" id="toc-list">
+      <li class="toc-item toc-loading">
+        <span class="toc-empty">Loading...</span>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script define:vars={{ postTitle }}>
+  function generateSlug(text) {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+  }
+
+  function extractTableOfContents() {
+    const headings = Array.from(
+      document.querySelectorAll(".prose h2, .prose h3"),
+    );
+    const toc = [];
+    let currentH2 = null;
+
+    headings.forEach((heading) => {
+      const level = Number.parseInt(heading.tagName[1], 10);
+      const title = heading.textContent || "";
+      let id = heading.id;
+
+      if (!id) {
+        id = generateSlug(title);
+        heading.id = id;
+      }
+
+      const entry = {
+        id,
+        title,
+        level,
+      };
+
+      if (level === 2) {
+        currentH2 = entry;
+        toc.push(entry);
+      } else if (level === 3 && currentH2) {
+        if (!currentH2.children) {
+          currentH2.children = [];
+        }
+        currentH2.children.push(entry);
+      }
+    });
+
+    return toc;
+  }
+
+  function renderToc() {
+    const toc = extractTableOfContents();
+    const tocList = document.getElementById("toc-list");
+
+    if (!tocList) {
+      return;
+    }
+
+    // Clear loading state
+    tocList.innerHTML = "";
+
+    // Add top-level title link
+    const topLi = document.createElement("li");
+    topLi.className = "toc-item toc-level-1";
+
+    const topLink = document.createElement("a");
+    topLink.href = "#post-top";
+    topLink.className = "toc-link toc-link-h1";
+
+    const topIndicator = document.createElement("span");
+    topIndicator.className = "toc-indicator";
+    topLink.appendChild(topIndicator);
+
+    const topText = document.createElement("span");
+    topText.className = "toc-text";
+    topText.textContent = postTitle;
+    topLink.appendChild(topText);
+
+    topLi.appendChild(topLink);
+    tocList.appendChild(topLi);
+
+    // Render TOC items
+    toc.forEach((entry) => {
+      const li = document.createElement("li");
+      li.className = "toc-item toc-level-2";
+
+      const link = document.createElement("a");
+      link.href = `#${entry.id}`;
+      link.className = "toc-link toc-link-h2";
+
+      // Add visual indicator for h2
+      const indicator = document.createElement("span");
+      indicator.className = "toc-indicator";
+      link.appendChild(indicator);
+
+      const text = document.createElement("span");
+      text.className = "toc-text";
+      text.textContent = entry.title;
+      link.appendChild(text);
+
+      li.appendChild(link);
+
+      // Add sub-items if they exist
+      if (entry.children && entry.children.length > 0) {
+        li.classList.add("has-children");
+
+        const sublist = document.createElement("ul");
+        sublist.className = "toc-sublist";
+
+        entry.children.forEach((child) => {
+          const subli = document.createElement("li");
+          subli.className = "toc-item toc-level-3";
+
+          const sublink = document.createElement("a");
+          sublink.href = `#${child.id}`;
+          sublink.className = "toc-link toc-link-h3";
+
+          // Add visual indicator for h3
+          const subIndicator = document.createElement("span");
+          subIndicator.className = "toc-indicator";
+          sublink.appendChild(subIndicator);
+
+          const subtext = document.createElement("span");
+          subtext.className = "toc-text";
+          subtext.textContent = child.title;
+          sublink.appendChild(subtext);
+
+          subli.appendChild(sublink);
+          sublist.appendChild(subli);
+        });
+
+        li.appendChild(sublist);
+      }
+
+      tocList.appendChild(li);
+    });
+  }
+
+  // Active heading tracking
+  function setupActiveTracking() {
+    const tocLinks = document.querySelectorAll(".toc-link");
+    const headings = Array.from(
+      document.querySelectorAll("#post-top, .prose h2, .prose h3"),
+    );
+
+    function updateActiveLink() {
+      let activeId = "post-top";
+
+      // Find the heading closest to the top of the viewport
+      for (const heading of headings) {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 100) {
+          activeId = heading.id;
+        } else {
+          break;
+        }
+      }
+
+      // Update active link styling
+      tocLinks.forEach((link) => {
+        link.classList.remove("active");
+        link.classList.remove("active-parent");
+        link.removeAttribute("aria-current");
+
+        if (link.getAttribute("href") === `#${activeId}`) {
+          link.classList.add("active");
+          link.setAttribute("aria-current", "location");
+
+          const parentItem = link
+            .closest(".toc-level-3")
+            ?.closest(".toc-level-2");
+          const parentLink = parentItem?.querySelector(".toc-link-h2");
+          parentLink?.classList.add("active-parent");
+        }
+      });
+    }
+
+    // Update on scroll
+    window.addEventListener("scroll", updateActiveLink);
+
+    // Update on page load
+    updateActiveLink();
+
+    // Smooth scroll handling
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const href = link.getAttribute("href");
+        if (href) {
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+            // Update active link immediately
+            updateActiveLink();
+          }
+        }
+      });
+    });
+  }
+
+  function initToc() {
+    renderToc();
+    setupActiveTracking();
+    setupMobileToggle();
+  }
+
+  function setupMobileToggle() {
+    const toggleButton = document.getElementById("toc-mobile-toggle");
+    const tocSidebar = toggleButton?.closest(".toc-sidebar");
+
+    if (!tocSidebar || !toggleButton) {
+      return;
+    }
+
+    const mobileQuery = window.matchMedia("(max-width: 1023px)");
+
+    const syncToViewport = () => {
+      if (mobileQuery.matches) {
+        tocSidebar.classList.remove("is-expanded");
+        toggleButton.setAttribute("aria-expanded", "false");
+        return;
+      }
+
+      tocSidebar.classList.add("is-expanded");
+      toggleButton.setAttribute("aria-expanded", "true");
+    };
+
+    syncToViewport();
+
+    const onViewportChange = () => {
+      syncToViewport();
+    };
+
+    if (typeof mobileQuery.addEventListener === "function") {
+      mobileQuery.addEventListener("change", onViewportChange);
+    } else if (typeof mobileQuery.addListener === "function") {
+      mobileQuery.addListener(onViewportChange);
+    }
+
+    toggleButton.addEventListener("click", () => {
+      if (!mobileQuery.matches) {
+        return;
+      }
+
+      const isExpanded = tocSidebar.classList.toggle("is-expanded");
+      toggleButton.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+    });
+  }
+
+  // Wait for DOM to be ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initToc);
+  } else {
+    initToc();
+  }
+</script>
+
+<style is:global>
+  .toc-sidebar {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .toc-sidebar {
+      display: block;
+    }
+  }
+
+  .toc-container {
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-theme-border);
+    border-opacity: 0.4;
+    background-color: color-mix(
+      in oklab,
+      var(--color-theme-surface) 88%,
+      var(--color-theme-background)
+    );
+    padding: 1.75rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  }
+
+  .toc-title {
+    margin-bottom: 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-theme-accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .toc-title::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 1rem;
+    background-color: var(--color-theme-accent);
+    border-radius: 2px;
+  }
+
+  .toc-mobile-toggle {
+    display: none;
+  }
+
+  .toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .toc-sublist {
+    margin-top: 0.375rem;
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    border-left: 3px solid
+      color-mix(in oklab, var(--color-theme-accent) 45%, transparent);
+    padding-left: 1rem;
+  }
+
+  .toc-item {
+    list-style: none;
+  }
+
+  .toc-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: color-mix(in oklab, var(--color-theme-text) 75%, transparent);
+    transition: all 0.2s ease;
+    position: relative;
+    padding: 0.4rem 0.625rem;
+    border-radius: 0.5rem;
+    line-height: 1.5;
+    text-decoration: none;
+  }
+
+  .toc-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .toc-text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .toc-level-1 .toc-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: color-mix(in oklab, var(--color-theme-foreground) 94%, white);
+    margin-bottom: 0.5rem;
+  }
+
+  .toc-level-1 .toc-indicator {
+    width: 0.875rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    background-color: var(--color-theme-accent);
+  }
+
+  .toc-level-2 .toc-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .toc-level-2.has-children > .toc-link {
+    margin-bottom: 0.125rem;
+  }
+
+  .toc-level-2 .toc-indicator {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--color-theme-accent) 85%, white);
+  }
+
+  .toc-level-3 .toc-link {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: color-mix(in oklab, var(--color-theme-text) 68%, transparent);
+    padding-left: 0.75rem;
+  }
+
+  .toc-level-3 .toc-indicator {
+    width: 0.625rem;
+    height: 2px;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--color-theme-accent) 50%, transparent);
+  }
+
+  .toc-link:hover {
+    color: var(--color-theme-accent);
+    background-color: color-mix(
+      in oklab,
+      var(--color-theme-accent) 10%,
+      transparent
+    );
+  }
+
+  .toc-link:hover .toc-indicator {
+    transform: scale(1.08);
+  }
+
+  .toc-link.active {
+    font-weight: 600;
+    color: var(--color-theme-accent);
+    background-color: color-mix(
+      in oklab,
+      var(--color-theme-accent) 12%,
+      transparent
+    );
+  }
+
+  .toc-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0.125rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 68%;
+    border-radius: 9999px;
+    background-color: var(--color-theme-accent);
+  }
+
+  .toc-link.active-parent {
+    color: color-mix(in oklab, var(--color-theme-accent) 90%, white);
+    background-color: color-mix(
+      in oklab,
+      var(--color-theme-accent) 6%,
+      transparent
+    );
+  }
+
+  .toc-link.active .toc-indicator {
+    background-color: var(--color-theme-accent);
+  }
+
+  .toc-link:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--color-theme-accent) 80%, white);
+    outline-offset: 2px;
+  }
+
+  .toc-empty {
+    font-size: 0.875rem;
+    color: color-mix(in oklab, var(--color-theme-text) 50%, transparent);
+  }
+
+  /* Mobile: Collapsible TOC */
+  @media (max-width: 1023px) {
+    .toc-sidebar {
+      display: block;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .toc-container {
+      border-radius: 0;
+      border-bottom: 1px solid var(--color-theme-border);
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      border-bottom-opacity: 0.3;
+      box-shadow: none;
+      padding: 1rem;
+    }
+
+    .toc-title {
+      display: none;
+    }
+
+    .toc-mobile-toggle {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border: 1px solid var(--color-theme-border);
+      border-opacity: 0.35;
+      border-radius: 0.625rem;
+      padding: 0.5rem 0.75rem;
+      background-color: color-mix(
+        in oklab,
+        var(--color-theme-surface) 70%,
+        transparent
+      );
+      color: color-mix(in oklab, var(--color-theme-foreground) 92%, white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .toc-mobile-toggle-icon {
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--color-theme-accent);
+      transition: transform 0.2s ease;
+    }
+
+    .toc-sidebar.is-expanded .toc-mobile-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .toc-list {
+      display: none;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .toc-sidebar.is-expanded .toc-list {
+      display: flex;
+    }
+
+    .toc-sublist {
+      display: flex;
+      margin-top: 0.375rem;
+      margin-left: 1rem;
+      flex-direction: column;
+      gap: 0.375rem;
+      border-left: 3px solid
+        color-mix(in oklab, var(--color-theme-accent) 45%, transparent);
+      padding-left: 1rem;
+    }
+
+    .toc-item {
+      width: 100%;
+    }
+
+    .toc-link {
+      width: 100%;
+      display: flex;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.625rem;
+      background: transparent;
+    }
+  }
+</style>
