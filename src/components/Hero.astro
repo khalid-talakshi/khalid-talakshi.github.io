@@ -1,0 +1,91 @@
+---
+// Hero component - Homepage hero section with intro and CTA buttons
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  ctaButtons?: Array<{
+    text: string;
+    href: string;
+    variant?: "primary" | "secondary";
+  }>;
+}
+
+const {
+  title = "Hi, I'm Khalid",
+  subtitle = "Full-Stack Developer & Creative Technologist",
+  description = "I build beautiful, functional digital experiences. Explore my work, read my thoughts, and let's create something amazing together.",
+  ctaButtons = [
+    { text: "View My Work", href: "/projects", variant: "primary" },
+    { text: "Read My Blog", href: "/blog", variant: "secondary" },
+  ],
+} = Astro.props;
+---
+
+<section class="w-full py-12 md:py-20 lg:py-28 relative overflow-hidden">
+  {/* Background gradient */}
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-theme-primary/5 via-theme-accent/5 to-theme-secondary/5 pointer-events-none"
+  >
+  </div>
+
+  {/* Animated background elements */}
+  <div
+    class="absolute top-10 left-10 w-72 h-72 bg-theme-primary/10 rounded-full blur-3xl animate-pulse pointer-events-none"
+  >
+  </div>
+  <div
+    class="absolute bottom-10 right-10 w-72 h-72 bg-theme-accent/10 rounded-full blur-3xl animate-pulse pointer-events-none"
+  >
+  </div>
+
+  {/* Content */}
+  <div class="relative z-10 w-full sm:w-[95%] mx-auto px-4 sm:px-0">
+    <div class="max-w-3xl mx-auto text-center">
+      {/* Main Title */}
+      <h1
+        class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-theme-foreground via-theme-accent to-theme-primary bg-clip-text text-transparent animate-fade-in"
+      >
+        {title}
+      </h1>
+
+      {/* Subtitle */}
+      <p
+        class="text-xl md:text-2xl font-semibold text-theme-accent mb-6 animate-fade-in"
+        style="animation-delay: 0.1s"
+      >
+        {subtitle}
+      </p>
+
+      {/* Description */}
+      <p
+        class="text-base md:text-lg text-theme-text/80 leading-relaxed mb-10 max-w-2xl mx-auto animate-fade-in"
+        style="animation-delay: 0.2s"
+      >
+        {description}
+      </p>
+
+      {/* CTA Buttons */}
+      <div
+        class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in"
+        style="animation-delay: 0.3s"
+      >
+        {
+          ctaButtons.map((button) => (
+            <a
+              href={button.href}
+              class={`px-8 py-3 rounded-xl font-semibold text-base transition-all duration-300 ${
+                button.variant === "primary"
+                  ? "bg-gradient-to-r from-theme-primary to-theme-accent text-white shadow-lg shadow-theme-primary/30 hover:shadow-xl hover:shadow-theme-primary/40 hover:scale-105"
+                  : "border-2 border-theme-accent text-theme-accent hover:bg-theme-accent/10 hover:scale-105"
+              }`}
+            >
+              {button.text}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

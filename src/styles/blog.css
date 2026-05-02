@@ -1,0 +1,4 @@
+@reference './global.css'
+h2 {
+  @apply text-3xl;
+}

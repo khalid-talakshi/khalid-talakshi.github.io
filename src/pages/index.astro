@@ -1,0 +1,109 @@
+---
+import StandardPageLayout from "../layouts/StandardPageLayout.astro";
+import Hero from "../components/Hero.astro";
+import FeaturedBlogCard from "../components/FeaturedBlogCard.astro";
+import FeaturedProjectCard from "../components/FeaturedProjectCard.astro";
+import { getCollection } from "astro:content";
+
+// Get featured blog post
+const blogPosts = await getCollection("blog", ({ data }) => data.published);
+const featuredBlog = blogPosts.length > 0 ? blogPosts[0] : null;
+
+// Get featured project
+const projects = await getCollection("projects");
+const featuredProject = projects.find((p) => p.data.featured) || projects[0];
+---
+
+<StandardPageLayout>
+  {/* Hero Section */}
+  <Hero
+    title="Hi, I'm Khalid"
+    subtitle="Full-Stack Developer & Creative Technologist"
+    description="I build beautiful, functional digital experiences. Explore my work, read my thoughts, and let's create something amazing together."
+    ctaButtons={[
+      { text: "View My Work", href: "/projects", variant: "primary" },
+      { text: "Read My Blog", href: "/blog", variant: "secondary" },
+    ]}
+  />
+
+  {/* Featured Content Section */}
+  <section class="py-12 md:py-16 lg:py-20">
+    <div class="mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-theme-primary mb-2">
+        Featured Content
+      </h2>
+      <p class="text-theme-text/70">
+        Explore my latest projects and blog posts
+      </p>
+    </div>
+
+    {/* Featured Grid */}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {/* Featured Blog Post */}
+      {
+        featuredBlog && (
+          <FeaturedBlogCard
+            title={featuredBlog.data.title}
+            description={featuredBlog.data.description}
+            date={featuredBlog.data.date}
+            author={featuredBlog.data.author}
+            href={`/posts/${featuredBlog.slug}`}
+            readingTime="8 min read"
+          />
+        )
+      }
+
+      {/* Featured Project */}
+      {
+        featuredProject && (
+          <FeaturedProjectCard
+            title={featuredProject.data.title}
+            description={featuredProject.data.description}
+            tags={featuredProject.data.tags}
+            technologies={featuredProject.data.technologies}
+            href={`/projects/${featuredProject.slug}`}
+          />
+        )
+      }
+    </div>
+  </section>
+
+  {/* About Preview Section */}
+  <section class="py-12 md:py-16 lg:py-20 border-t border-theme-border/20">
+    <div class="max-w-3xl">
+      <h2 class="text-3xl md:text-4xl font-bold text-theme-primary mb-6">
+        About Me
+      </h2>
+      <p class="text-lg text-theme-text/80 leading-relaxed mb-6">
+        I'm a full-stack developer with a passion for creating elegant solutions
+        to complex problems. With expertise in modern web technologies, I build
+        scalable applications that combine beautiful design with robust
+        functionality.
+      </p>
+      <p class="text-lg text-theme-text/80 leading-relaxed mb-8">
+        Whether it's crafting interactive user experiences, optimizing backend
+        systems, or exploring new technologies, I'm always eager to learn and
+        grow. This site is my digital home where I share my work, thoughts, and
+        insights.
+      </p>
+      <a
+        href="/about"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-theme-primary to-theme-accent hover:shadow-lg hover:shadow-theme-primary/30 transition-all duration-300 hover:scale-105"
+      >
+        Learn More About Me
+        <svg
+          class="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+</StandardPageLayout>

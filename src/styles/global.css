@@ -1,0 +1,292 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+@theme {
+  /* Primary Colors - Devosfera Style with Blue */
+  --color-primary-blue: #3b82f6;
+  --color-primary-blue-bright: #60a5fa;
+  --color-primary-purple: #a855f7;
+  --color-primary-foreground: #f5f5f5;
+  --color-primary-background: #111111;
+
+  /* Neutrals */
+  --color-neutral-white: #ffffff;
+  --color-neutral-light-gray: #f5f5f5;
+  --color-neutral-gray: #888888;
+  --color-neutral-dark-gray: #333333;
+
+  /* Theme Colors - Devosfera Dark with Blue */
+  --color-theme-accent: #3b82f6;
+  --color-theme-background: #111111;
+  --color-theme-foreground: #f5f5f5;
+  --color-theme-muted: #1f1f1f;
+  --color-theme-border: #333333;
+  --color-theme-surface: #1a1a1a;
+  --color-theme-text: #f5f5f5;
+  --color-theme-text-secondary: #a0a0a0;
+  --color-theme-purple: #a855f7;
+
+  /* Gradients */
+  --gradient-blue-glow: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --gradient-purple-glow: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+  --gradient-dark: linear-gradient(135deg, #1f1f1f 0%, #111111 100%);
+
+  /* Fonts */
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+/* Global Styles */
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-theme-background);
+  color: var(--color-theme-text);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise' seed='2'/%3E%3C/filter%3E%3Crect width='400' height='400' fill='%23111111' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-theme-accent);
+  color: var(--color-theme-background);
+}
+
+/* Chart and Graph Styling */
+svg[viewBox] {
+  filter: brightness(1.1) contrast(1.1);
+}
+
+/* React/Chart Component Styling */
+canvas {
+  filter: brightness(1.05);
+}
+
+/* Recharts specific styling */
+.recharts-wrapper {
+  filter: brightness(1.05) contrast(1.05);
+}
+
+.recharts-surface {
+  background-color: transparent !important;
+}
+
+.recharts-text {
+  fill: var(--color-theme-text) !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: var(--color-theme-text) !important;
+  opacity: 0.8;
+}
+
+.recharts-legend-wrapper {
+  color: var(--color-theme-text) !important;
+}
+
+/* Code block styling */
+pre {
+  background-color: var(--color-theme-muted) !important;
+  border: 1px solid var(--color-theme-border) !important;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+code {
+  color: var(--color-theme-accent) !important;
+  font-family: var(--font-sans);
+}
+
+/* Card Glow Effects */
+.card-glow {
+  contain: paint;
+}
+
+.card-glow-effect {
+  background: radial-gradient(
+    350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    color-mix(in oklab, var(--accent) 8%, transparent) 0%,
+    color-mix(in oklab, var(--accent) 4%, transparent) 30%,
+    color-mix(in oklab, var(--accent) 0.8%, transparent) 60%,
+    transparent 80%
+  );
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-glow-effect {
+    background: none;
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  /* Fade in animations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-fade-in-down {
+    animation: fadeInDown 0.6s ease-out;
+  }
+
+  /* Slide animations */
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  /* Scale animations */
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+
+  /* Gradient animations */
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+
+  /* Hover effects */
+  .hover-lift {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 102, 204, 0.2);
+  }
+
+  .hover-glow {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(0, 153, 255, 0.4);
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: rgba(20, 24, 41, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 102, 204, 0.1);
+  }
+
+  .glass-hover {
+    transition: all 0.3s ease;
+  }
+
+  .glass-hover:hover {
+    background: rgba(20, 24, 41, 0.9);
+    border-color: rgba(0, 102, 204, 0.3);
+  }
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

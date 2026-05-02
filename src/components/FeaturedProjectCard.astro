@@ -1,0 +1,105 @@
+---
+// FeaturedProjectCard component - Display a featured project
+
+export interface Props {
+  title: string;
+  description: string;
+  tags?: string[];
+  href: string;
+  image?: string;
+  technologies?: string[];
+}
+
+const {
+  title,
+  description,
+  tags = [],
+  href,
+  image,
+  technologies = [],
+} = Astro.props;
+---
+
+<article
+  class="group relative overflow-hidden rounded-2xl border border-theme-border/30 bg-gradient-to-br from-theme-accent/5 to-theme-secondary/5 backdrop-blur-sm transition-all duration-300 hover:border-theme-accent/50 hover:shadow-lg hover:shadow-theme-accent/20"
+>
+  {/* Image */}
+  {
+    image && (
+      <div class="relative h-48 overflow-hidden bg-theme-accent/10">
+        <img
+          src={image}
+          alt={title}
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
+    )
+  }
+
+  {/* Content */}
+  <div class="p-6 md:p-8">
+    {/* Title */}
+    <h3
+      class="mb-3 text-2xl md:text-3xl font-bold text-theme-accent group-hover:text-theme-primary transition-colors duration-200"
+    >
+      {title}
+    </h3>
+
+    {/* Description */}
+    <p class="mb-6 text-base text-theme-text/80 leading-relaxed line-clamp-3">
+      {description}
+    </p>
+
+    {/* Technologies */}
+    {
+      technologies.length > 0 && (
+        <div class="mb-6 flex flex-wrap gap-2">
+          {technologies.slice(0, 3).map((tech) => (
+            <span class="inline-block px-3 py-1 rounded-full bg-theme-primary/20 text-xs font-medium text-theme-primary">
+              {tech}
+            </span>
+          ))}
+          {technologies.length > 3 && (
+            <span class="inline-block px-3 py-1 rounded-full bg-theme-primary/10 text-xs font-medium text-theme-text/60">
+              +{technologies.length - 3} more
+            </span>
+          )}
+        </div>
+      )
+    }
+
+    {/* Tags */}
+    {
+      tags.length > 0 && (
+        <div class="mb-6 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="inline-block px-2 py-1 rounded-lg bg-theme-accent/20 text-xs font-medium text-theme-accent">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )
+    }
+
+    {/* CTA */}
+    <a
+      href={href}
+      class="inline-flex items-center gap-2 text-theme-accent font-semibold hover:gap-3 transition-all duration-200"
+    >
+      View Project
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</article>

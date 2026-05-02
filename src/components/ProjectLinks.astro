@@ -1,0 +1,37 @@
+---
+interface ProjectLink {
+  type: "github" | "download" | "web" | "other";
+  href: string;
+  label?: string;
+}
+
+export interface Props {
+  links?: ProjectLink[];
+}
+
+const { links = [] } = Astro.props;
+
+const linkLabels: Record<ProjectLink["type"], string> = {
+  github: "GitHub",
+  download: "Download",
+  web: "Website",
+  other: "Link",
+};
+
+const getLabel = (link: ProjectLink): string =>
+  link.label ?? linkLabels[link.type];
+---
+
+{
+  links.length > 0 && (
+    <ul aria-label="Project links">
+      {links.map((link) => (
+        <li>
+          <a href={link.href} target="_blank" rel="noopener noreferrer">
+            {getLabel(link)}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

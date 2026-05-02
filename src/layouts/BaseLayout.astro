@@ -1,0 +1,33 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Devosfera-style Fonts */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --font-sans: "Cascadia Code", "Space Mono", monospace;
+        --font-display: "Cascadia Code", "Space Mono", monospace;
+      }
+    </style>
+
+    <title>Khalid Talakshi</title>
+  </head>
+  <body class="bg-theme-background text-theme-text font-sans">
+    <slot />
+  </body>
+</html>

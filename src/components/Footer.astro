@@ -1,0 +1,100 @@
+---
+// Footer component - Minimal footer with links and copyright
+
+export interface Props {
+  year?: number;
+}
+
+const { year = new Date().getFullYear() } = Astro.props;
+
+const socialLinks = [
+  { text: "GitHub", href: "https://github.com", icon: "github" },
+  { text: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
+  { text: "Twitter", href: "https://twitter.com", icon: "twitter" },
+];
+
+const footerLinks = [
+  { text: "Home", href: "/" },
+  { text: "About", href: "/about" },
+  { text: "Projects", href: "/projects" },
+  { text: "Blog", href: "/blog" },
+];
+---
+
+<footer
+  class="w-full border-t border-theme-border/30 bg-theme-background/50 backdrop-blur-sm mt-12 md:mt-16"
+>
+  <div class="w-full sm:w-[95%] mx-auto px-4 sm:px-0 py-8 md:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      {/* Brand Section */}
+      <div class="flex flex-col gap-3">
+        <h3
+          class="text-lg font-bold bg-gradient-to-r from-theme-foreground to-theme-accent bg-clip-text text-transparent"
+        >
+          Khalid Talakshi
+        </h3>
+        <p class="text-sm text-theme-text/70 leading-relaxed">
+          Full-stack developer, designer, and creative technologist.
+        </p>
+      </div>
+
+      {/* Navigation Links */}
+      <div class="flex flex-col gap-3">
+        <h4
+          class="font-semibold text-theme-primary text-sm uppercase tracking-wide"
+        >
+          Navigation
+        </h4>
+        <ul class="flex flex-col gap-2">
+          {
+            footerLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-theme-text/70 hover:text-theme-accent transition-colors duration-200"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {/* Social Links */}
+      <div class="flex flex-col gap-3">
+        <h4
+          class="font-semibold text-theme-primary text-sm uppercase tracking-wide"
+        >
+          Connect
+        </h4>
+        <ul class="flex flex-col gap-2">
+          {
+            socialLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm text-theme-text/70 hover:text-theme-accent transition-colors duration-200"
+                  aria-label={link.text}
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    {/* Copyright */}
+    <div
+      class="border-t border-theme-border/20 mt-8 pt-6 text-center text-xs text-theme-text/50"
+    >
+      <p>
+        &copy; {year} Khalid Talakshi. All rights reserved. Built with Astro.
+      </p>
+    </div>
+  </div>
+</footer>

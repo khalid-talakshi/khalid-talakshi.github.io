@@ -1,0 +1,210 @@
+---
+title: "Understanding the RB Swap"
+author: "Khalid Talakshi"
+description: "Why Lawson is leaving so early, and is Tsunoda the best replacement?"
+published: true
+date: 26-03-2025
+tags: ["analysis", "motorsports", "data"]
+---
+
+import EChartsLineChart from "../../components/charts/EChartsLineChart.tsx";
+import EChartsScatterChart from "../../components/charts/EChartsScatterChart.tsx";
+import { ver_data, tsu_data, law_data } from "../datasets/rb-swap-data.js";
+
+export const color_map = {
+  TSU: "#fff",
+  VER: "#232F83",
+  LAW: "#ff0000",
+};
+
+export const tsu_trace = {
+  name: "TSU",
+  x: "distance",
+  y: "speed",
+  data: tsu_data,
+  color: color_map["TSU"],
+};
+
+export const ver_trace = {
+  name: "VER",
+  x: "distance",
+  y: "speed",
+  data: ver_data,
+  color: color_map["VER"],
+};
+
+export const law_trace = {
+  name: "LAW",
+  x: "distance",
+  y: "speed",
+  data: law_data,
+  color: color_map["LAW"],
+};
+
+export const tsu_brake_trace = {
+  name: "TSU",
+  x: "distance",
+  y: "brake",
+  data: tsu_data,
+  color: color_map["TSU"],
+};
+
+export const ver_brake_trace = {
+  name: "VER",
+  x: "distance",
+  y: "brake",
+  data: ver_data,
+};
+
+export const law_brake_trace = {
+  name: "LAW",
+  x: "distance",
+  y: "brake",
+  data: law_data,
+  color: color_map["LAW"],
+};
+
+export const tsu_track_map = {
+  name: "TSU",
+  x: "x",
+  y: "y",
+  data: tsu_data,
+  color: "speed",
+};
+
+export const law_track_map = {
+  name: "LAW",
+  x: "x",
+  y: "y",
+  data: law_data,
+  color: "speed",
+};
+
+export const ver_track_map = {
+  name: "VER",
+  x: "x",
+  y: "y",
+  data: ver_data,
+  color: "speed",
+};
+
+After an abysmal performance in China, earning 0 points over 3 point offering sessions, its clear that Lawson needed to either get in gear or retire his position. Unfortunately for him, it seems Red Bull has made that decision for him, with plans to swap him out for Tsunoda at his home grand prix. With only 2 Red Bull races under his belt, and one of two full season rookies at a top team, is it too soon to pull the trigger on Lawson or is Red Bull doing their team right by picking up Tsunoda, a name that has been associated with Red Bull since starting his time in F1, yet only getting the drive now after 4 years with the sister team. Today we are gonna explore the reasons for the swap, understanding the foundation of the team at this point in their life, and look at the driver styles to see how this fairs.
+
+## A Note Before We Start
+
+While I am an enthusiast when it comes to the sport, I am by no means an expert in either F1 or data analysis. This is merely my own thoughts on the situation and some analysis that I did. All data is pulled from the FastF1 API and analyzed in Python. So while this article may seem a matter of fact, any reader should make sure they analyze the situation on their own and I welcome discussion in the comments.
+
+## The Story of the Second Driver
+
+Since Ricciardo’s departure in 2018, Red Bull has had a second driver problem. Gasly was chosen as his replacement, but with a lacklustre performance compared to everyone’s favourite aussie, he was dropped after 12 races with Albon replacing him. In 2020 Albon was dropped in favour of Sergio “Checo” Perez, with the reason being quite obvious, Red Bull wanted the “best second driver”. This is where the story of the second driver stood, with Red Bull trying to find someone to support Verstappen, and not another contender driver. At top teams like Red Bull and Mercedes, they view the second driver as a support for their main drivers who will contend for the driver’s championship. Their job is to pick up points for constructors championship, help develop the car with alternate strategies to the main one, and defend when the main driver needs to make up places. From the get go Checo looked like the right person for this job, earning him names like “King of the Streets” and “Mexican Minister of Defense”. Yet noticeably in the latter half 2023 and 2024, his performance dropped, scoring an average of 6.3 points per grand prix vs 18.1 points per grand prix by Verstappen. With calls from fans and executives alike to sack Checo in favour of a driver with credible performance, at the end of 2024 Checo was left without a contract and Lawson would fill his seat. While the general accepted reason for Checo leaving was performance, there is a notable story around the development of the car post Miami 2024, where McLaren introduced a major upgrade, and Chief Technical Officer Adrian Newey left Red Bull Racing.
+
+One of the main jobs as a second driver is development of the car. Their job is to help provide insights on the car to help develop upgrades to keep the car faster. When the two cars on the grid are so spaced apart, feedback often needs to be adjusted. Understanding why one driver is doing well vs the other is an important part in understanding the performance gap. Is it the car or is it the driver? What makes the car harder for one driver vs the other? Are their setups causing issues? When asking these kind of questions, its also hard to account for bias. How much weight does each driver’s feedback earns is often a question that needs to be answered to understand the development path. All signs point to Red Bull keeping the car in a state where Verstappen can drive it to a championship and not a car that can be driven by both in the points. The second driver problem is most prominent at Red Bull due to a lack of consistency in their second driver spot, combined with an emphasis on Verstappen leading the championship and a poor performance by Checo in his latter races. Knowing all this we have established that the car is really suited for someone with a similar style as Verstappen, so we can analyze how Lawson and Tsunoda fair against him.
+
+## LAW vs TSU: Battle for the Second Seat
+
+At the end of 2024 everyone thought Tsunoda was a shoe in for the second Red Bull seat. Similarly, Lawson’s campaign in the RB replacing Ricciardo was also meant as a test to see if he was ready for a full time F1 drive. At the end of it all, both drivers made a solid claim but Lawson ended up getting the seat. Given the swap being confirmed, lets look at what problems exist to make the case for Tsunoda’s place. Going back to our claim that the car is suited for a Verstappen like style we can look at the telemetry for each driver and compare it to Verstappen. For this we will be using each driver’s fastest qualifying lap in the 2025 Chinese Grand Prix as an analysis point.
+
+### Speed
+
+<EChartsLineChart
+  client:load
+  traces={[tsu_trace, ver_trace]}
+  title="Tsunoda vs Verstappen - Speed"
+  xAxisLabel="Distance"
+  yAxisLabel="Speed"
+/>
+<EChartsLineChart
+  client:load
+  traces={[law_trace, ver_trace]}
+  title="Lawson vs Verstappen - Speed"
+  xAxisLabel="Distance"
+  yAxisLabel="Speed"
+/>
+
+There are two key details that make themselves evident in these graphs. The first is the shift in the VER-LAW graph. For the majority of the lap, Verstappen’s speed line is shifted leftward, and since both follow similar trends, Verstappen is the faster driver in each segment. This is because he is able to be more aggressive speed wise coming into a turn and can stop harder at the beginning of each turn, giving him a faster dropoff. This comes with its own challenges, as some of his lowest speeds go lower than Lawson at those same points. Moreover, In the first and third peaks we see at closeup a slower speed for Verstappen, but longer at that top speed. This means that Verstappen can take that car into the corner slightly slower than Lawson but carry that speed longer through the corner, giving him a faster time out of that corner.
+
+Tsunoda’s graph is identical to Verstappen’s despite being in a different car. While there are some areas that have noticeable differences (3rd peak where it looks like he had to avoid something), the graph shows that Verstappen and Tsunoda like the slightly more control focused approach vs the raw power approach that Lawson does.
+
+### Braking
+
+<EChartsLineChart
+  client:load
+  traces={[tsu_brake_trace, ver_brake_trace]}
+  title="Tsunoda vs Verstappen - Braking"
+  xAxisLabel="Distance"
+  yAxisLabel="Brake"
+/>
+<EChartsLineChart
+  client:load
+  traces={[law_brake_trace, ver_brake_trace]}
+  title="Lawson vs Verstappen - Braking"
+  xAxisLabel="Distance"
+  yAxisLabel="Brake"
+/>
+
+With the braking, Lawson is clearly shown as a late breaker, with a significant emphasis on shorter, later brake windows. However, this further proves the point that the style Lawson brings is just not suited towards the car. Verstappen prefers earlier braking, with more focus on using the brakes sporadically rather than as a continuous force. This identically matches Tsunoda’s driving style as shown on the right.
+
+### Racemap
+
+While looking at telemetry timeseries graphs is useful, it is also important to look at the track map to understand how different track elements effect approach and racing. For this we will look at speed around the circuit for each driver. To being lets look at Verstappen's.
+
+<EChartsScatterChart
+  client:load
+  traces={[
+    {
+      name: "Verstappen Track Map",
+      data: ver_track_map.data,
+      x: ver_track_map.x,
+      y: ver_track_map.y,
+      color: ver_track_map.color,
+    },
+  ]}
+  title="Verstappen - Track Map (Chinese GP Qualifying)"
+  xAxisLabel="X Position"
+  yAxisLabel="Y Position"
+  symbolSize={6}
+/>
+
+In this map we can really see Verstappen's aggressiveness and technique. He is often a late braker but carries more speed through the corners. Now lets look at Lawson's track map.
+
+<EChartsScatterChart
+  client:load
+  traces={[
+    {
+      name: "Lawson Track Map",
+      data: law_track_map.data,
+      x: law_track_map.x,
+      y: law_track_map.y,
+      color: law_track_map.color,
+    },
+  ]}
+  title="Lawson - Track Map (Chinese GP Qualifying)"
+  xAxisLabel="X Position"
+  yAxisLabel="Y Position"
+  symbolSize={6}
+/>
+
+While the track maps are nearly identical, there are a few areas where the slow speed regions are slightly more expanded than on Verstappens, such as turns 9-10. Verstappen is also quicker to ramp up to speed on the straights. This allows him to get further ahead of Lawson out of corners, an important part of driving the Red Bull car. Finally lets look at Tsunoda's track map.
+
+<EChartsScatterChart
+  client:load
+  traces={[
+    {
+      name: "Tsunoda Track Map",
+      data: tsu_track_map.data,
+      x: tsu_track_map.x,
+      y: tsu_track_map.y,
+      color: tsu_track_map.color,
+    },
+  ]}
+  title="Tsunoda - Track Map (Chinese GP Qualifying)"
+  xAxisLabel="X Position"
+  yAxisLabel="Y Position"
+  symbolSize={6}
+/>
+
+Looking at Tsunoda’s track map, he has similar expanded regions to Lawson (looking at turns 9-10), but given that he is in the (arguably) worse car this is to be expected. Turns 14 and 15 show similar speeds to Verstappen than Lawson’s, with Tsunoda’s acceleration being slightly better. Overall Verstappen and Tsunoda share a similar control quality that allows them to carry some speed out of the exits of corners.
+
+## Wrapping It Up
+
+When it comes to who’s driving style is ideal for the Red Bull car, we see that Tsunoda share many of the same qualities as Verstappen from the way he carries speed through the corners to his shorter brake action. For the 2025 season, Tsunoda makes the most sense to be the driver of what is arguably the best and most difficult car on the grid. With an emphasis on points being needed for the Constructors Championship along with the need for development feedback from a driver who can actually drive the car, the switch makes the most sense if Red Bull want to remain competitive as a team and not just as Verstappen’s team.

@@ -1,0 +1,55 @@
+---
+// Navbar component - Horizontal navigation with mobile responsiveness
+// Uses constrained width, not full viewport
+
+export interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+const navLinks = [
+  { text: "Home", href: "/" },
+  { text: "About", href: "/about" },
+  { text: "Projects", href: "/projects" },
+  { text: "Blog", href: "/blog" },
+];
+
+const isActive = (href: string): boolean => currentPath === href;
+---
+
+<nav
+  class="w-full sm:w-[95%] mx-auto my-4 px-4 sm:px-0"
+  aria-label="Main navigation"
+>
+  <div
+    class="flex items-center justify-between gap-4 bg-theme-muted/30 border border-theme-border/30 rounded-2xl p-3 backdrop-blur-sm"
+  >
+    {/* Logo/Brand */}
+    <a
+      href="/"
+      class="font-bold text-xl md:text-2xl bg-gradient-to-r from-theme-foreground to-theme-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity duration-200 whitespace-nowrap max-sm:hidden"
+    >
+      Khalid Talakshi
+    </a>
+
+    {/* Navigation Links */}
+    <div class="flex items-center gap-1 md:gap-2 ml-auto">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`px-3 md:px-4 py-2 rounded-xl font-medium text-sm md:text-base transition-all duration-200 whitespace-nowrap ${
+              isActive(link.href)
+                ? "bg-gradient-to-r from-theme-primary to-theme-accent text-white shadow-lg shadow-theme-primary/30"
+                : "text-theme-text hover:bg-theme-primary/20 hover:text-theme-primary"
+            }`}
+            aria-current={isActive(link.href) ? "page" : undefined}
+          >
+            {link.text}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>

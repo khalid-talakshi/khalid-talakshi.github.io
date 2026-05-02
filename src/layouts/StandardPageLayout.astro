@@ -1,0 +1,17 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import Container from "../components/Container.astro";
+import BaseLayout from "./BaseLayout.astro";
+---
+
+<BaseLayout>
+  <Navbar currentPath={Astro.url.pathname} />
+  <Container maxWidth="lg" padding="md">
+    <main>
+      <slot />
+    </main>
+  </Container>
+  <Footer />
+</BaseLayout>

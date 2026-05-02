@@ -1,0 +1,469 @@
+---
+import StandardPageLayout from "../layouts/StandardPageLayout.astro";
+import ProjectModal from "../components/ProjectModal";
+import { getCollection } from "astro:content";
+
+// Get all projects
+const projects = (await getCollection("projects")).filter((x) => x.data.hidden != true);
+
+// Get unique tags, technologies, and types
+const allTags = Array.from(
+  new Set(projects.flatMap((p) => p.data.tags || [])),
+).sort();
+
+const allTechnologies = Array.from(
+  new Set(projects.flatMap((p) => p.data.technologies || [])),
+).sort();
+
+const allTypes = Array.from(
+  new Set(projects.flatMap((p) => (p.data.type ? [p.data.type] : []))),
+).sort();
+---
+
+<StandardPageLayout>
+  {/* Page Header */}
+  <section class="py-8 md:py-12 border-b border-theme-border/20">
+    <h1 class="text-4xl md:text-5xl font-bold text-theme-foreground mb-4">
+      Projects
+    </h1>
+    <p class="text-lg text-theme-text/80 max-w-2xl">
+      A collection of projects I've built, designed, and shipped. Each one
+      represents a unique challenge and learning opportunity.
+    </p>
+  </section>
+
+  {/* Filter Section */}
+  <section class="py-6 md:py-8 border-b border-theme-border/20">
+    <div class="space-y-3">
+      {/* All Projects Button */}
+      <div class="flex items-center gap-2">
+        <button
+          class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-gradient-to-r from-theme-accent to-theme-accent text-white shadow-lg shadow-theme-accent/30"
+          data-filter="all"
+          data-filter-type="all"
+        >
+          All Projects
+        </button>
+        <span class="text-xs text-theme-text/50">Reset filters</span>
+      </div>
+
+      {/* Type Filters */}
+      {
+        allTypes.length > 0 && (
+          <div class="filter-group">
+            <button
+              class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-primary hover:text-theme-primary/80 transition-colors"
+              data-group="type"
+            >
+              <svg
+                class="h-4 w-4 transition-transform duration-200"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+              Type
+            </button>
+            <div class="filter-group-content flex flex-wrap gap-2 pl-6 mt-2">
+              {allTypes.map((type) => (
+                <button
+                  class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-primary text-theme-primary hover:bg-theme-primary/10"
+                  data-filter={type}
+                  data-filter-type="type"
+                  title={`Filter by type: ${type}`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      {/* Technology Filters */}
+      {
+        allTechnologies.length > 0 && (
+          <div class="filter-group">
+            <button
+              class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-secondary hover:text-theme-secondary/80 transition-colors"
+              data-group="technology"
+            >
+              <svg
+                class="h-4 w-4 transition-transform duration-200"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+              Technology
+            </button>
+            <div class="filter-group-content flex flex-wrap gap-2 pl-6 mt-2">
+              {allTechnologies.map((tech) => (
+                <button
+                  class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-secondary text-theme-secondary hover:bg-theme-secondary/10"
+                  data-filter={tech}
+                  data-filter-type="technology"
+                  title={`Filter by technology: ${tech}`}
+                >
+                  {tech}
+                </button>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      {/* Tag Filters */}
+      {
+        allTags.length > 0 && (
+          <div class="filter-group">
+            <button
+              class="filter-group-toggle flex items-center gap-2 text-sm font-semibold text-theme-accent hover:text-theme-accent/80 transition-colors"
+              data-group="tag"
+            >
+              <svg
+                class="h-4 w-4 transition-transform duration-200"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+              Tags
+            </button>
+            <div class="filter-group-content flex flex-wrap gap-2 pl-6 mt-2">
+              {allTags.map((tag) => (
+                <button
+                  class="filter-btn px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-theme-accent text-theme-accent hover:bg-theme-accent/10"
+                  data-filter={tag}
+                  data-filter-type="tag"
+                  title={`Filter by tag: ${tag}`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  {/* Projects Grid */}
+  <section class="py-12 md:py-16">
+    {
+      projects.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <ProjectModal
+              client:load
+              title={project.data.title}
+              description={project.data.description}
+              type={project.data.type}
+              technologies={project.data.technologies}
+              tags={project.data.tags}
+              links={project.data.links}
+            >
+              <article
+                class="project-card group relative overflow-hidden rounded-2xl border border-theme-border/30 bg-gradient-to-br from-theme-accent/5 to-theme-secondary/5 backdrop-blur-sm transition-all duration-300 hover:border-theme-accent/50 hover:shadow-lg hover:shadow-theme-accent/20 cursor-pointer h-full"
+                data-tags={project.data.tags?.join(",")}
+                data-type={project.data.type}
+                data-technologies={project.data.technologies?.join(",")}
+              >
+                {/* Content */}
+                <div class="p-6">
+                  {/* Title */}
+                  <h3 class="mb-2 text-xl font-bold text-theme-accent group-hover:text-theme-primary transition-colors duration-200">
+                    {project.data.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p class="mb-4 text-sm text-theme-text/80 line-clamp-3">
+                    {project.data.description}
+                  </p>
+
+                  {/* Technologies */}
+                  {project.data.technologies &&
+                    project.data.technologies.length > 0 && (
+                      <div class="mb-4 flex flex-wrap gap-1">
+                        {project.data.technologies
+                          .slice(0, 2)
+                          .map((tech: string) => (
+                            <span class="inline-block px-2 py-1 rounded-full bg-theme-primary/20 text-xs font-medium text-theme-primary">
+                              {tech}
+                            </span>
+                          ))}
+                        {project.data.technologies.length > 2 && (
+                          <span class="inline-block px-2 py-1 rounded-full bg-theme-primary/10 text-xs font-medium text-theme-text/60">
+                            +{project.data.technologies.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
+                  {/* Tags */}
+                  {project.data.tags && project.data.tags.length > 0 && (
+                    <div class="mb-4 flex flex-wrap gap-1">
+                      {project.data.tags.map((tag: string) => (
+                        <span class="inline-block px-2 py-1 rounded-lg bg-theme-accent/20 text-xs font-medium text-theme-accent">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* CTA */}
+                  <button
+                    class="inline-flex items-center gap-2 text-theme-accent font-semibold hover:gap-3 transition-all duration-200 bg-none border-none p-0 cursor-pointer"
+                    aria-label={`View ${project.data.title} details`}
+                  >
+                    View Project
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </article>
+            </ProjectModal>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-lg text-theme-text/60">
+            No projects yet. Check back soon!
+          </p>
+        </div>
+      )
+    }
+  </section>
+</StandardPageLayout>
+
+<script>
+  // Collapsible filter groups
+  const filterGroupToggles = document.querySelectorAll(".filter-group-toggle");
+  filterGroupToggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const group = toggle.closest(".filter-group");
+      const content = group.querySelector(".filter-group-content");
+      const icon = toggle.querySelector("svg");
+
+      content.classList.toggle("hidden");
+      icon.classList.toggle("rotate-180");
+    });
+  });
+
+  // Multi-field filter functionality with AND between categories, OR within categories
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  const projectCards = document.querySelectorAll(".project-card");
+
+  // Track active filters by type (can have multiple per category)
+  const activeFilters = {
+    type: [],
+    technology: [],
+    tag: [],
+  };
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.getAttribute("data-filter");
+      const filterType = btn.getAttribute("data-filter-type");
+
+      if (filter === "all") {
+        // Reset all filters
+        activeFilters.type = [];
+        activeFilters.technology = [];
+        activeFilters.tag = [];
+
+        // Update button styles
+        filterBtns.forEach((b) => {
+          if (b.getAttribute("data-filter") === "all") {
+            b.classList.add(
+              "bg-gradient-to-r",
+              "from-theme-accent",
+              "to-theme-accent",
+              "text-white",
+              "shadow-lg",
+              "shadow-theme-accent/30",
+            );
+            b.classList.remove(
+              "border",
+              "border-theme-accent",
+              "text-theme-accent",
+              "hover:bg-theme-accent/10",
+            );
+          } else {
+            b.classList.remove(
+              "bg-gradient-to-r",
+              "from-theme-primary",
+              "to-theme-accent",
+              "text-white",
+              "shadow-lg",
+              "shadow-theme-primary/30",
+              "shadow-theme-secondary/30",
+              "bg-theme-primary/20",
+              "bg-theme-secondary/20",
+              "bg-theme-accent/20",
+            );
+            const btnFilterType = b.getAttribute("data-filter-type");
+            if (btnFilterType === "type") {
+              b.classList.add(
+                "border",
+                "border-theme-primary",
+                "text-theme-primary",
+                "hover:bg-theme-primary/10",
+              );
+            } else if (btnFilterType === "technology") {
+              b.classList.add(
+                "border",
+                "border-theme-secondary",
+                "text-theme-secondary",
+                "hover:bg-theme-secondary/10",
+              );
+            } else if (btnFilterType === "tag") {
+              b.classList.add(
+                "border",
+                "border-theme-accent",
+                "text-theme-accent",
+                "hover:bg-theme-accent/10",
+              );
+            }
+          }
+        });
+      } else {
+        // Toggle filter
+        const index = activeFilters[filterType].indexOf(filter);
+        if (index > -1) {
+          activeFilters[filterType].splice(index, 1);
+          btn.classList.remove(
+            "bg-gradient-to-r",
+            "from-theme-primary",
+            "to-theme-accent",
+            "text-white",
+            "shadow-lg",
+            "shadow-theme-primary/30",
+            "bg-theme-primary/20",
+            "bg-theme-secondary/20",
+            "bg-theme-accent/20",
+          );
+          const btnFilterType = btn.getAttribute("data-filter-type");
+          if (btnFilterType === "type") {
+            btn.classList.add(
+              "border",
+              "border-theme-primary",
+              "text-theme-primary",
+              "hover:bg-theme-primary/10",
+            );
+          } else if (btnFilterType === "technology") {
+            btn.classList.add(
+              "border",
+              "border-theme-secondary",
+              "text-theme-secondary",
+              "hover:bg-theme-secondary/10",
+            );
+          } else if (btnFilterType === "tag") {
+            btn.classList.add(
+              "border",
+              "border-theme-accent",
+              "text-theme-accent",
+              "hover:bg-theme-accent/10",
+            );
+          }
+        } else {
+          activeFilters[filterType].push(filter);
+          btn.classList.add(
+            "bg-gradient-to-r",
+            "from-theme-primary",
+            "to-theme-accent",
+            "text-white",
+            "shadow-lg",
+            "shadow-theme-primary/30",
+          );
+          btn.classList.remove(
+            "border",
+            "border-theme-primary",
+            "border-theme-secondary",
+            "border-theme-accent",
+            "text-theme-primary",
+            "text-theme-secondary",
+            "text-theme-accent",
+            "hover:bg-theme-primary/10",
+            "hover:bg-theme-secondary/10",
+            "hover:bg-theme-accent/10",
+          );
+        }
+      }
+
+      // Filter projects: AND between categories, OR within categories
+      projectCards.forEach((card) => {
+        let shouldShow = true;
+
+        // Check type filter (OR: match any active type)
+        if (activeFilters.type.length > 0) {
+          const cardType = card.getAttribute("data-type");
+          if (!activeFilters.type.includes(cardType)) {
+            shouldShow = false;
+          }
+        }
+
+        // Check technology filter (OR: match any active technology)
+        if (shouldShow && activeFilters.technology.length > 0) {
+          const cardTechs =
+            card
+              .getAttribute("data-technologies")
+              ?.split(",")
+              .filter((t) => t) || [];
+          const hasMatchingTech = activeFilters.technology.some((tech) =>
+            cardTechs.includes(tech),
+          );
+          if (!hasMatchingTech) {
+            shouldShow = false;
+          }
+        }
+
+        // Check tag filter (OR: match any active tag)
+        if (shouldShow && activeFilters.tag.length > 0) {
+          const cardTags =
+            card
+              .getAttribute("data-tags")
+              ?.split(",")
+              .filter((t) => t) || [];
+          const hasMatchingTag = activeFilters.tag.some((tag) =>
+            cardTags.includes(tag),
+          );
+          if (!hasMatchingTag) {
+            shouldShow = false;
+          }
+        }
+
+        card.style.display = shouldShow ? "block" : "none";
+      });
+    });
+  });
+</script>

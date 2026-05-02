@@ -1,0 +1,218 @@
+---
+import StandardPageLayout from "../layouts/StandardPageLayout.astro";
+import { getCollection } from "astro:content";
+import skillsData from "../data/skills.json";
+
+// Get experience and education
+const experience = await getCollection("experience");
+const education = await getCollection("education");
+
+// Format date helper
+const formatDate = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+  });
+};
+
+// Calculate duration
+const calculateDuration = (start: string, end: string): string => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const months =
+    (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+    (endDate.getMonth() - startDate.getMonth());
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+
+  if (years > 0 && remainingMonths > 0) {
+    return `${years}y ${remainingMonths}m`;
+  } else if (years > 0) {
+    return `${years}y`;
+  } else {
+    return `${remainingMonths}m`;
+  }
+};
+---
+
+<StandardPageLayout>
+  {/* Page Header */}
+  <section class="py-8 md:py-12 border-b border-theme-border/20">
+    <h1 class="text-4xl md:text-5xl font-bold text-theme-primary mb-4">
+      About Me
+    </h1>
+    <p class="text-lg text-theme-text/80 max-w-2xl">
+      Full-stack developer, designer, and creative technologist passionate about
+      building beautiful, functional digital experiences.
+    </p>
+  </section>
+
+  {/* Bio Section */}
+  <section class="py-12 md:py-16">
+    <div class="max-w-3xl">
+      <h2 class="text-3xl font-bold text-theme-primary mb-6">Who I Am</h2>
+      <div class="space-y-4 text-theme-text/80 leading-relaxed">
+        <p>
+          I'm a full-stack developer with a passion for creating elegant
+          solutions to complex problems. With expertise in modern web
+          technologies, I build scalable applications that combine beautiful
+          design with robust functionality.
+        </p>
+        <p>
+          My journey in tech started with a curiosity about how things work. I
+          quickly fell in love with the process of turning ideas into reality
+          through code. Whether it's crafting interactive user experiences,
+          optimizing backend systems, or exploring new technologies, I'm always
+          eager to learn and grow.
+        </p>
+        <p>
+          When I'm not coding, you can find me exploring new technologies,
+          contributing to open-source projects, or sharing my knowledge with
+          others through writing and speaking.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Experience Section */}
+  {
+    experience.length > 0 && (
+      <section class="py-12 md:py-16 border-t border-theme-border/20">
+        <h2 class="text-3xl font-bold text-theme-primary mb-8">Experience</h2>
+        <div class="space-y-6">
+          {experience.map((exp) => (
+            <div class="relative pl-8 pb-6 border-l-2 border-theme-primary/30 last:pb-0">
+              {/* Timeline dot */}
+              <div class="absolute -left-3 top-0 w-4 h-4 rounded-full bg-theme-primary border-4 border-theme-background" />
+
+              {/* Content */}
+              <div>
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="text-xl font-bold text-theme-accent">
+                      {exp.data.role}
+                    </h3>
+                    <p class="text-theme-text/70">{exp.data.company}</p>
+                  </div>
+                  <div class="text-sm text-theme-text/60 whitespace-nowrap">
+                    {formatDate(exp.data.startDate)} -{" "}
+                    {formatDate(exp.data.endDate)}
+                    <span class="ml-2 text-theme-primary">
+                      ({calculateDuration(exp.data.startDate, exp.data.endDate)}
+                      )
+                    </span>
+                  </div>
+                </div>
+                <p class="text-theme-text/80 mb-3">{exp.data.description}</p>
+                {exp.data.technologies && exp.data.technologies.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {exp.data.technologies.map((tech: string) => (
+                      <span class="inline-block px-3 py-1 rounded-full bg-theme-primary/20 text-xs font-medium text-theme-primary">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {/* Education Section */}
+  {
+    education.length > 0 && (
+      <section class="py-12 md:py-16 border-t border-theme-border/20">
+        <h2 class="text-3xl font-bold text-theme-primary mb-8">Education</h2>
+        <div class="space-y-6">
+          {education.map((edu) => (
+            <div class="relative pl-8 pb-6 border-l-2 border-theme-accent/30 last:pb-0">
+              {/* Timeline dot */}
+              <div class="absolute -left-3 top-0 w-4 h-4 rounded-full bg-theme-accent border-4 border-theme-background" />
+
+              {/* Content */}
+              <div>
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="text-xl font-bold text-theme-accent">
+                      {edu.data.degree}
+                    </h3>
+                    <p class="text-theme-text/70">{edu.data.school}</p>
+                    <p class="text-sm text-theme-text/60">{edu.data.field}</p>
+                  </div>
+                  <div class="text-sm text-theme-text/60 whitespace-nowrap">
+                    {formatDate(edu.data.graduationDate)}
+                  </div>
+                </div>
+                {edu.data.description && (
+                  <p class="text-theme-text/80">{edu.data.description}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {/* Skills Section */}
+  <section class="py-12 md:py-16 border-t border-theme-border/20">
+    <h2 class="text-3xl font-bold text-theme-primary mb-8">Skills</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        skillsData.skills.map((skillGroup) => (
+          <div class="rounded-xl border border-theme-border/30 bg-gradient-to-br from-theme-primary/5 to-theme-accent/5 p-6">
+            <h3 class="text-lg font-bold text-theme-primary mb-4">
+              {skillGroup.category}
+            </h3>
+            <ul class="space-y-2">
+              {skillGroup.items.map((skill: string) => (
+                <li class="flex items-center gap-2 text-theme-text/80">
+                  <span class="w-2 h-2 rounded-full bg-theme-accent" />
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <section class="py-12 md:py-16 border-t border-theme-border/20">
+    <div
+      class="rounded-2xl border border-theme-border/30 bg-gradient-to-r from-theme-primary/10 to-theme-accent/10 p-8 md:p-12 text-center"
+    >
+      <h2 class="text-3xl font-bold text-theme-primary mb-4">
+        Let's Work Together
+      </h2>
+      <p class="text-lg text-theme-text/80 mb-8 max-w-2xl mx-auto">
+        I'm always interested in hearing about new projects and opportunities.
+        Feel free to reach out if you'd like to collaborate!
+      </p>
+      <a
+        href="mailto:hello@khalidtalakshi.com"
+        class="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-theme-primary to-theme-accent hover:shadow-lg hover:shadow-theme-primary/30 transition-all duration-300 hover:scale-105"
+      >
+        Get In Touch
+        <svg
+          class="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+</StandardPageLayout>
