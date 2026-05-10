@@ -19,4 +19,31 @@ On the topic of topics, I have two separate but related problems: I want to stud
 
 ## Tackling the Schedule
 
-Aside from our topics, every personal curriculum needs 3 things: a schedule, a place, and way to practice. Our first step is providing structure for each of these pillars by defining how they work in this curriculum. Schedule for me seems to be the toughest and its because of the variability of my work. 
+Aside from tasks, every personal curriculum has 3 things: a schedule, a place, and a way to practice. These 3 things can be custom to what you want but they should be defined. Out of all 3, schedule is the one I found the hardest to manage before and predict I will struggle with the most in this new framework. The main reason is because my work is very different week to week and month to month, but also predictable.We can divide my year up into 3 types of weeks: off weeks, low weeks and high weeks. In a 52 calendar year, we have 16 of each type of week, with 4 weeks reserved as vacation/time off.
+
+Each week type comes with its own benefits and downsides. High weeks tend to be more work heavy and tend to spend more time at the office, which lends itself to being able to use some of that time to do learnings at the office. Low weeks are usually normal hours so more predictable and can easily slot in time for learning. Finally off weeks are great for when I need to spend a bigger block of time learning, but these weeks also tend to be the least predictable as ad-hoc work may come up more often during this time. This means its best to have 3 different types of schedules to help ensure continued momentum in realistic ways to my life.
+
+In terms of yearly planning we want to figure out the best time to start and end our year curriculum. In our case this year timeline doesn't mean get everything done, but rather means we have a year to focus on this iteration and we can do a big update after a year. It helps to visualize a breakdown of week types by month.
+
+```mermaid
+xychart
+    title "Week Schedule By Type"
+    x-axis [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
+    y-axis "Weeks" 0 --> 5
+    line [0, 0, 1, 2, 2, 3, 3, 2, 3, 4, 1, 0]
+    line [0, 1, 2, 2, 2, 1, 0, 2, 1, 0, 0, 0]
+    line [4, 3, 1, 0, 0, 0, 1, 0, 0, 0, 3, 4]
+
+
+```
+
+<div class="chart-legend">
+  <span class="chart-legend-item">
+    <span class="chart-legend-swatch chart-legend-swatch--bar"></span>
+    <span>Active users (bar)</span>
+  </span>
+  <span class="chart-legend-item">
+    <span class="chart-legend-swatch chart-legend-swatch--line"></span>
+    <span>Trend line (line)</span>
+  </span>
+</div>
