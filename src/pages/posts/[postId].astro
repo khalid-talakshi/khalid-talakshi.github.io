@@ -117,3 +117,32 @@ const allPosts = await getCollection("blog");
     }
   }
 </style>
+
+<script>
+  function normalizeMermaidXyAxisLabels() {
+    const charts = document.querySelectorAll(
+      'svg[aria-roledescription="xychart"]',
+    );
+
+    charts.forEach((chart) => {
+      const labels = chart.querySelectorAll(".bottom-axis .label text");
+
+      labels.forEach((label) => {
+        const raw = (label.textContent || "").trim();
+        const value = Number(raw);
+
+        if (!Number.isFinite(value)) {
+          return;
+        }
+
+        label.style.display = Number.isInteger(value) ? "" : "none";
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", normalizeMermaidXyAxisLabels);
+  } else {
+    normalizeMermaidXyAxisLabels();
+  }
+</script>
