@@ -17,7 +17,18 @@ One of the biggest struggles I had was a lack of structure. In university, it wa
 
 On the topic of topics, I have two separate but related problems: I want to study a lot of things but also have a problem with dropping topics as well. This is a mentality thing as I feel like when something gets hard or boring I tend to give up. The personal curriculum addresses this by a) allowing you to structure learning on multiple topics together and b) allowing you to be flexible in what materials and ways you learn. I'm hoping this allows me to feel empowered to continue with topics as I get bored with materials.
 
-## Tackling the Schedule
+## Setting Up Our Framework
+
+Every Personal Curriculum is made up of 4 key pillars:
+
+- A schedule
+- A place
+- A way of practice
+- A set of topics
+
+Each of these pillars are meant to provide our structure we want for learning while also being flexible enough for updates and adaptations to improve our learning process. We will talk about our set of topics later, for now I want to tackle the other 3 pillars and how we can set ourselves up for success with them.
+
+### Tackling the Schedule
 
 Aside from tasks, every personal curriculum has 3 things: a schedule, a place, and a way to practice. These 3 things can be custom to what you want but they should be defined. Out of all 3, schedule is the one I found the hardest to manage before and predict I will struggle with the most in this new framework. The main reason is because my work is very different week to week and month to month, but also predictable.We can divide my year up into 3 types of weeks: off weeks, low weeks and high weeks. In a 52 calendar year, we have 16 of each type of week, with 4 weeks reserved as vacation/time off.
 
@@ -26,10 +37,10 @@ Each week type comes with its own benefits and downsides. High weeks tend to be 
 In terms of yearly planning we want to figure out the best time to start and end our year curriculum. In our case this year timeline doesn't mean get everything done, but rather means we have a year to focus on this iteration and we can do a big update after a year. It helps to visualize a breakdown of week types by month.
 
 ```mermaid
-xychart
+xychart-beta
     title "Week Schedule By Type"
-    x-axis [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
-    y-axis "Weeks" 0 --> 5
+    x-axis [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12]
+    y-axis "Weeks" 0 --> 4.5
     line [0, 0, 1, 2, 2, 3, 3, 2, 3, 4, 1, 0]
     line [0, 1, 2, 2, 2, 1, 0, 2, 1, 0, 0, 0]
     line [4, 3, 1, 0, 0, 0, 1, 0, 0, 0, 3, 4]
@@ -39,11 +50,47 @@ xychart
 
 <div class="chart-legend">
   <span class="chart-legend-item">
-    <span class="chart-legend-swatch chart-legend-swatch--bar"></span>
-    <span>Active users (bar)</span>
+    <span class="chart-legend-swatch chart-legend-swatch--line-2"></span>
+    <span>Off Weeks</span>
   </span>
   <span class="chart-legend-item">
     <span class="chart-legend-swatch chart-legend-swatch--line"></span>
-    <span>Trend line (line)</span>
+    <span>Low Weeks</span>
+  </span>
+  <span class="chart-legend-item">
+    <span class="chart-legend-swatch chart-legend-swatch--line-3"></span>
+    <span>High Weeks</span>
   </span>
 </div>
+
+From this we can see a period of relative calm at the ends while the middle months tend to be busier. From this we can do one of 3 schedules:
+
+- November -> October: The benefit of this is that our off week period is maximized at the beginning of the schedule while we end in a busy portion of time in October.
+- April -> March: While a little unorthodox, it moves our off week period to the end, in the hopes of capitalizing on that momentum to get to the end.
+- January -> December: Traditional year calendar.
+
+For myself, I felt like November to October is the best for getting a high amount of momentum, so while we are starting our curriculum for 2026 now, we will use these extra 6 months to refine and develop our practice better so when the schedule does officially stat we are in a better place. We will also do an update at the start of our year in November. We'll go over our schedule in the topics section later.
+
+### Our Place for Knowledge
+
+The next pillar is place, and while I initially thought it meant where I was gonna learn, it actually means where will I keep my learnings. This is actually the easiest for me to set up because I already have a pretty good setup going for this.
+
+For our notes, we will be using Obsidian to keep track of things. I like obsidian a lot because its local and offline, can be extended to have numerous features that other apps have, and is markdown based which is a format I love to work in. I already started using the Zettelkasten approach of a course I was taking and I think that given my topic choice, combined with Obsidian's reference linking, will allow me to have a better understanding of my knowledge base. It also requires very little organization which will help me with not losing momentum due to disorganization.
+
+Any coding projects will (for now) be on GitHub. While it has many faults (more so recently), I am pretty well set up in it and its where most of my projects are stored currently. This also has the most potential for change due to how easy it is to change providers and the trajectory of the product.
+
+Finally, any deliverables I am able to create will be published on this site here. I'm hoping to do things like mini essays, papers, and even apps that people can use. What use is a personal website if you can't post the cool things you do in life on it!
+
+### Practicing our Craft
+
+The final pillar is practice, which is how are we planning on validating and proving our knowledge. While this sounds a little harsh, we ultimately want to prove what we know and identify what we don't so that we can target our learning better. My goal is to have a couple deliverables for each project in some of the following forms:
+
+- Apps/Sites
+- Papers
+- Blog Posts
+
+In addition to deliverables, we want to use our obsidian to link topics together for stronger connection and easier review. One of the other things we will try is using AI to help with our learning. While AI is a controversial topic, there are a couple uses for it that I see myself benefiting from, such as knowledge searching and generation of review materials. Our goal is to not use AI to help generate the content but rather as a tool to create some of the resources traditional learning is good at. This will be an experiment and we will track its effectiveness. 
+
+## Our 2026 Topics
+
+

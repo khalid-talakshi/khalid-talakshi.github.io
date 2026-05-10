@@ -205,6 +205,14 @@ html {
   background: var(--color-primary-blue-bright);
 }
 
+.prose .chart-legend-swatch--line-2 {
+  background: #93c5fd;
+}
+
+.prose .chart-legend-swatch--line-3 {
+  background: #1d4ed8;
+}
+
 @media (max-width: 640px) {
   .prose .katex-display {
     margin: 1rem -0.25rem;
