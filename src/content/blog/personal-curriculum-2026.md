@@ -3,7 +3,7 @@ title: "My Personal Curriculum in 2026"
 author: "Khalid Talakshi"
 description: "Planning my personal development in 2026"
 published: true
-date: 09-05-2026
+date: "09-05-2026"
 tags:
   - learning
   - professional-development
@@ -89,8 +89,71 @@ The final pillar is practice, which is how are we planning on validating and pro
 - Papers
 - Blog Posts
 
-In addition to deliverables, we want to use our obsidian to link topics together for stronger connection and easier review. One of the other things we will try is using AI to help with our learning. While AI is a controversial topic, there are a couple uses for it that I see myself benefiting from, such as knowledge searching and generation of review materials. Our goal is to not use AI to help generate the content but rather as a tool to create some of the resources traditional learning is good at. This will be an experiment and we will track its effectiveness. 
+In addition to deliverables, we want to use our obsidian to link topics together for stronger connection and easier review. One of the other things we will try is using AI to help with our learning. While AI is a controversial topic, there are a couple uses for it that I see myself benefiting from, such as knowledge searching and generation of review materials. Our goal is to not use AI to help generate the content but rather as a tool to create some of the resources traditional learning is good at. This will be an experiment and we will track its effectiveness.
 
 ## Our 2026 Topics
 
+This is the main part of our 2026 curriculum, the topics we want to learn. It took me a little bit of time to figure this part out, and I don't think that's a bad thing. Its not realistic to do everything I want, but I also didn't want to compromise my personal or professional goals. To do this, I created 3 criteria for whether a topic fits into this years curriculum.
 
+1. Expanding my depth in areas related to my career
+2. Expand my breadth in to areas that I could be working on
+3. Long term growth and opportunities
+
+The first two are career related, as I'm relatively young in my industry and want to keep growing while also expanding the areas I work on. The third is probably my favourite goal because its personal to me. It allows me to decide what I want as long as I can justify it will help me in the long term. So while basket weaving may not be on my curriculum today, it may be on the future if baskets become an integral part of my life!
+
+I also to categorize topics into groups for prioritization. In life unpredictability happens so having a clear structure on what topics are more or less important means if push comes to shove and I need to choose a topic to bump down, I can. To keep it simple we have two groups: Core and Electives. Core subjects will take priority over electives as they will help me in career advancement which is the main goal of this years curriculum, while electives are more for personal growth and exploration, or are things I can explore in my work.
+
+| Core              | Elective                        |
+| ----------------- | ------------------------------- |
+| Bayesian Analysis | Home Labbing                    |
+| Spanish           | Data/Systems Engineering Theory |
+| Player Evaluation | Mechanics                       |
+
+### Bayesian Analysis
+
+I have been wanting to learn more about Bayesian Analysis since I first heard about the topic in 2024. While I have dabbled into it a little bit, I ended up deciding to add it to this years curriculum because
+
+1. It felt like this new system was the right place to tackle this
+2. More people around me have also started learning it meaning that I have more ways to get resources
+3. Helps with a side goal of wanting to write more sports analysis
+
+Now I am "cheating" a little (as much as cheating can happen on a personal curriculum) because I have started working on this already, but I have barely scratched the surface, and also this is a personal thing so who cares if I have already started.
+
+I'm hoping to creante a few blog posts and papers using this (there is already one up on the importance of grid position placement in F1) and the resources I'm currently looking at exploring all have quizzes and assignments to help me practice.
+
+### Spanish
+
+For me, I didn't just want my personal curriculum to be all technical/STEM subjects, I wanted to include some of the arts. One thing I regret from my post secondary time was not learning a language. I did French all 4 years of high school but it never really stuck and I think it was because learning a language in a classroom setting just didn't work for me.
+
+Spanish also is useful in my career as a lot of people in my industry speak and work in spanish, so it will help with advancing my career goals as well, and given its latin routes it will open up improving my french and growing my italian. For this I'll mainly be doing duolingo and trying that out, alongside some other resources like podcasts and shows.
+
+### Player Evaluation
+
+Working in baseball, you ultimately pick up a little bit of what makes a good player and what doesn't. However I barely get time to practice this in my personal life and in other sports. To me this subject is aimed at creativity and exploration. There are no set rules, no set structure, all I have to do is read and learn.
+
+This subject will mainly be focused on Baseball, F1, Football (American and British) and Hockey. These are all sports that mean something in my life and by learning more about them I can get more enjoyment out of the sports. I'll mainly be doing readings and videos, with writings in the forms of blog posts and reviews.
+
+### Home Labbing
+
+A homelab is essentially a personal IT infrastructure that you can learn and practice building stuff on. It allows you to own your own data while also customizing features you want in your life. Whether it be smart home automation, content streaming, storage or even hosting your own apps, a home lab will help you with all this.
+
+I was lucky to be gifted an old tower PC that had a decent enough processor and RAM to start this journey, but honestly I just never did. Adding home labbing as an elective allows me to explore cool areas of tech I want to try out, solve problems for myself and my family that we have and open up new ideas for technology that I want to do in future curriculums.
+
+### Data/Systems Engineering Theory
+
+I have been working in the tech space for a long time, but I always felt like my theory side has been a little off. I can implement things really easily, but when it comes to initial design I struggle and need to grow. I have a ton of books on systems and data engineering that I haven't touched that I really want to digest and understand. I'm hoping we can extend our Zettelkasten to include more of the theory side of things and use that to help with my work projects as well.
+
+### Mechanics
+
+This is the one I'm probably most excited about and also the least prepared for. Ever since discovering motorsports I really wanted to learn more about cars, more specifically how they work. My biggest struggle here is gonna be where I can find materials and how I can practice. I have my own car but don't want to risk ruining it so while an oil change may be easy, a full engine teardown and rebuild is not something I will even know how to start, but I do know I want to get there!
+
+## Keeping on Track
+
+The final step in all this is making sure I keep on track with this curriculum. This part is gonna be developed and refined as we go through the curriculum but I know immediately some of the things I want to try before we hit our first review.
+
+1. Write More: Whether its a mini essay, a blog post, or a full on paper, I want to write more and put it out there. This to me is the most risky thing I can do because I do often feel like I might not be speaking on a subject correctly, but I also know that I won't get anywhere if I don't put something out there.
+2. Consistency is Key: As I talked about earlier my schedule is very variable, which often causes me to not be able to be consistent with my learning in my old mindset. While that hasn't changed, the way I approach consistency has. I know that I won't be able to do the same amount of learning every week, but I can do something every week. Whether its a small reading, a video, or even just organizing my notes, I want to make sure I'm doing something every week to keep the momentum going.
+3. Projects are Projects: it doesn't matter how big or small a project is, if it exists and is shareable, it does the job. Smaller projects are easier to do and finish, while bigger ones allow me to show my depth better. Regardless of the size, I want to make sure I'm putting out the projects I do.
+
+
+Now lets see if I can stick with this and am able to complete my 2026 curriculum! I'm excited to see how this goes and what I learn along the way. I'll be doing regular updates on my progress and any changes I make to the curriculum, so stay tuned!
