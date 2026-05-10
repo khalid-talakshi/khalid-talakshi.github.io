@@ -2,6 +2,7 @@
 import StandardPageLayout from "../layouts/StandardPageLayout.astro";
 import FeaturedBlogCard from "../components/FeaturedBlogCard.astro";
 import { getCollection, render } from "astro:content";
+import { parseDayMonthYearToTimestamp } from "../utils/date";
 import { getReadingTime } from "../utils/readingTime";
 
 // Reading time configuration (words per minute)
@@ -27,7 +28,9 @@ const enrichedPosts = await Promise.all(
 
 // Sort by date (newest first)
 const sortedPosts = enrichedPosts.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  (a, b) =>
+    parseDayMonthYearToTimestamp(b.data.date) -
+    parseDayMonthYearToTimestamp(a.data.date),
 );
 
 // Get unique tags

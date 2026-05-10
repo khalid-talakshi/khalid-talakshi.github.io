@@ -79,6 +79,140 @@ html {
   min-width: max-content;
 }
 
+/* Mermaid diagram rendering */
+.prose svg[id^="mermaid-"] {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto;
+  font-size: 1em;
+  margin: 1.5rem 0;
+  padding: 0.75rem;
+  background: color-mix(in oklab, var(--color-theme-muted) 45%, transparent);
+  border: 1px solid var(--color-theme-border);
+  border-radius: 0.75rem;
+}
+
+.prose svg[id^="mermaid-"] .background,
+.prose svg[id^="mermaid-"] rect.background {
+  fill: transparent !important;
+}
+
+.prose svg[id^="mermaid-"] text {
+  fill: var(--color-theme-text);
+  font-family: var(--font-sans);
+  font-size: 1em;
+}
+
+.prose svg[id^="mermaid-"] .node rect,
+.prose svg[id^="mermaid-"] .node circle,
+.prose svg[id^="mermaid-"] .node polygon,
+.prose svg[id^="mermaid-"] .node path {
+  stroke: var(--color-theme-border);
+}
+
+/* Mermaid sequence diagrams: force dark cards and accent lines */
+.prose svg[aria-roledescription="sequence"] .actor {
+  fill: var(--color-theme-muted) !important;
+  stroke: var(--color-theme-accent) !important;
+}
+
+.prose svg[aria-roledescription="sequence"] .actor-line,
+.prose svg[aria-roledescription="sequence"] .messageLine0,
+.prose svg[aria-roledescription="sequence"] .messageLine1 {
+  stroke: var(--color-theme-accent) !important;
+}
+
+.prose svg[aria-roledescription="sequence"] .messageText,
+.prose svg[aria-roledescription="sequence"] .actor-box,
+.prose svg[aria-roledescription="sequence"] .actor-box tspan {
+  fill: var(--color-theme-text) !important;
+}
+
+.prose svg[aria-roledescription="sequence"] [id$="-arrowhead"] path {
+  fill: var(--color-theme-accent) !important;
+  stroke: var(--color-theme-accent) !important;
+}
+
+/* Mermaid xychart: force dark background and readable axes */
+.prose svg[aria-roledescription="xychart"] .axis-line path,
+.prose svg[aria-roledescription="xychart"] .axisl-line path,
+.prose svg[aria-roledescription="xychart"] .ticks path {
+  stroke: var(--color-theme-text) !important;
+}
+
+.prose svg[aria-roledescription="xychart"] .label text,
+.prose svg[aria-roledescription="xychart"] .chart-title text {
+  fill: var(--color-theme-text) !important;
+}
+
+.prose svg[aria-roledescription="xychart"] .chart-title text {
+  font-size: 1.1rem !important;
+}
+
+.prose svg[aria-roledescription="xychart"] .left-axis .label text,
+.prose svg[aria-roledescription="xychart"] .left-axis .title text {
+  font-size: 1rem !important;
+}
+
+.prose svg[aria-roledescription="xychart"] .bottom-axis .label text {
+  font-size: 0.85rem !important;
+}
+
+.prose svg[aria-roledescription="xychart"] .line-plot-1 path {
+  stroke: var(--color-primary-blue-bright) !important;
+}
+
+.prose svg[aria-roledescription="xychart"] .bar-plot-0 rect {
+  fill: var(--color-theme-accent) !important;
+  stroke: var(--color-theme-accent) !important;
+}
+
+/* Manual legend block for Mermaid charts (xychart workaround) */
+.prose .chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--color-theme-text);
+}
+
+.prose .chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--color-theme-border);
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--color-theme-muted) 40%, transparent);
+}
+
+.prose .chart-legend-swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 9999px;
+  display: inline-block;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-theme-border) 80%, transparent);
+}
+
+.prose .chart-legend-swatch--bar {
+  background: var(--color-theme-accent);
+}
+
+.prose .chart-legend-swatch--line {
+  background: var(--color-primary-blue-bright);
+}
+
+.prose .chart-legend-swatch--line-2 {
+  background: #93c5fd;
+}
+
+.prose .chart-legend-swatch--line-3 {
+  background: #1d4ed8;
+}
+
 @media (max-width: 640px) {
   .prose .katex-display {
     margin: 1rem -0.25rem;
@@ -87,5 +221,12 @@ html {
 
   .prose .katex {
     font-size: 0.92em;
+  }
+
+  .prose svg[id^="mermaid-"] {
+    margin: 1rem -0.25rem;
+    max-width: calc(100% + 0.5rem);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
   }
 }

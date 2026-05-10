@@ -12,7 +12,8 @@ docs/
 │   ├── COLOR_MAPPING_GUIDE.md        # Color mapping and theming
 │   ├── COLOR_SCALE_GUIDE.md          # Color scale implementation
 │   ├── TRACE_FORMAT_GUIDE.md         # Trace format specification
-│   └── ECHARTS_MIGRATION_GUIDE.md    # ECharts migration from Recharts
+│   ├── ECHARTS_MIGRATION_GUIDE.md    # ECharts migration from Recharts
+│   └── MERMAID_MARKDOWN_GUIDE.md     # Mermaid diagrams in markdown
 ├── references/                        # Reference documentation and API docs
 │   ├── COLOR_MAPPING_QUICK_START.md  # Quick start for color mapping
 │   ├── TRACE_FORMAT_QUICK_START.md   # Quick start for trace format
@@ -32,6 +33,7 @@ docs/
 Step-by-step guides and comprehensive tutorials for implementing features.
 
 **Current Guides:**
+
 - **READING_TIME_GUIDE.md** - How to use the reading time calculation system
   - Configuration options
   - API reference
@@ -58,11 +60,17 @@ Step-by-step guides and comprehensive tutorials for implementing features.
   - Component updates
   - Configuration changes
 
+- **MERMAID_MARKDOWN_GUIDE.md** - Mermaid diagrams in markdown
+  - Fenced syntax
+  - Diagram examples
+  - Build-time rendering notes
+
 ### 📋 References (`/references`)
 
 Quick reference materials, API documentation, and implementation reports.
 
 **Current References:**
+
 - **COLOR_MAPPING_QUICK_START.md** - Quick start for color mapping
 - **TRACE_FORMAT_QUICK_START.md** - Quick start for trace format
 - **ECHARTS_ONLY_REFERENCE.md** - ECharts API reference
@@ -74,6 +82,7 @@ Quick reference materials, API documentation, and implementation reports.
 Documentation specific to migrations and version upgrades.
 
 **Current Migrations:**
+
 - (To be populated as migrations occur)
 
 ### ✅ Checklists (`/checklists`)
@@ -81,6 +90,7 @@ Documentation specific to migrations and version upgrades.
 Task lists and checklists for complex processes.
 
 **Current Checklists:**
+
 - **MIGRATION_CHECKLIST.md** - Comprehensive migration checklist
 
 ## 🎯 How to Use This Documentation
@@ -97,29 +107,37 @@ Task lists and checklists for complex processes.
 All documentation should follow these standards:
 
 #### Structure
+
 ```markdown
 # Title
 
 ## Overview
+
 Brief description of what this doc covers
 
 ## Table of Contents
+
 (if document is long)
 
 ## Main Content
+
 Organized with clear headings
 
 ## Examples
+
 Code examples and usage
 
 ## Troubleshooting
+
 Common issues and solutions
 
 ## References
+
 Links to related docs
 ```
 
 #### Formatting
+
 - Use clear, concise language
 - Include code examples where applicable
 - Use tables for comparisons
@@ -127,9 +145,12 @@ Links to related docs
 - Add "Last Updated" date at bottom
 
 #### Metadata
+
 Every doc should include at the bottom:
+
 ```markdown
 ---
+
 **Last Updated:** [Date]
 **Category:** [guides|references|migrations|checklists]
 **Related Docs:** [Links to related documentation]
@@ -161,21 +182,24 @@ When adding new AI-generated documentation:
 ## 🔗 Quick Links
 
 ### Getting Started
+
 - [Reading Time Guide](guides/READING_TIME_GUIDE.md) - Calculate reading time for blog posts
 - [Color Mapping Quick Start](references/COLOR_MAPPING_QUICK_START.md) - Quick color setup
 
 ### Implementation References
+
 - [ECharts Reference](references/ECHARTS_ONLY_REFERENCE.md) - ECharts API and configuration
 - [Trace Format Quick Start](references/TRACE_FORMAT_QUICK_START.md) - Trace format basics
 
 ### Migration Resources
+
 - [ECharts Migration Guide](guides/ECHARTS_MIGRATION_GUIDE.md) - Migrate from Recharts
 - [Migration Checklist](checklists/MIGRATION_CHECKLIST.md) - Step-by-step migration tasks
 
 ## 📊 Documentation Statistics
 
-- **Total Documents:** 13
-- **Guides:** 5
+- **Total Documents:** 14
+- **Guides:** 6
 - **References:** 5
 - **Migrations:** 0
 - **Checklists:** 1
@@ -184,6 +208,7 @@ When adding new AI-generated documentation:
 ## 🎓 Best Practices
 
 ✅ **Do:**
+
 - Keep docs up-to-date with code changes
 - Include practical examples
 - Link to related documentation
@@ -192,6 +217,7 @@ When adding new AI-generated documentation:
 - Include troubleshooting sections
 
 ❌ **Don't:**
+
 - Leave outdated information
 - Mix multiple topics in one doc
 - Forget to update the index
@@ -202,6 +228,7 @@ When adding new AI-generated documentation:
 ## 🔄 Maintenance
 
 Documentation should be reviewed and updated:
+
 - When features are added or changed
 - When bugs are fixed
 - When new best practices are discovered
@@ -210,6 +237,7 @@ Documentation should be reviewed and updated:
 ## 📞 Contributing
 
 When contributing documentation:
+
 1. Follow the structure and formatting standards
 2. Place in appropriate category folder
 3. Update this README with new entries
