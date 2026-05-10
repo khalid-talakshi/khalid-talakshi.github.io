@@ -2,7 +2,7 @@
 title: "Using Mermaid Diagrams in Astro Markdown"
 author: "Khalid Talakshi"
 description: "A quick check that Mermaid code fences compile to theme-aligned SVG diagrams."
-published: true
+published: false
 date: 09-05-2026
 tags: ["docs", "astro", "mermaid", "diagrams"]
 ---

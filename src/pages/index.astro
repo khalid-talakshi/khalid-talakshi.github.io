@@ -4,10 +4,18 @@ import Hero from "../components/Hero.astro";
 import FeaturedBlogCard from "../components/FeaturedBlogCard.astro";
 import FeaturedProjectCard from "../components/FeaturedProjectCard.astro";
 import { getCollection } from "astro:content";
+import { parseDayMonthYearToTimestamp } from "../utils/date";
 
 // Get featured blog post
 const blogPosts = await getCollection("blog", ({ data }) => data.published);
-const featuredBlog = blogPosts.length > 0 ? blogPosts[0] : null;
+const featuredBlog =
+  blogPosts.length > 0
+    ? [...blogPosts].sort(
+        (a, b) =>
+          parseDayMonthYearToTimestamp(b.data.date) -
+          parseDayMonthYearToTimestamp(a.data.date),
+      )[0]
+    : null;
 
 // Get featured project
 const projects = await getCollection("projects");
