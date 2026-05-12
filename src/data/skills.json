@@ -2,7 +2,7 @@
   "skills": [
     {
       "category": "Programming Languages",
-      "items": ["R", "Python", "JavaScript", "Ruby"]
+      "items": ["R", "Python", "JavaScript", "Ruby", "Kotlin"]
     },
     {
       "category": "Frontend",
@@ -10,18 +10,26 @@
     },
     {
       "category": "Backend",
-      "items": ["Ruby on Rails", "Django", "Node.JS", "Pyramid", "Flask"]
+      "items": [
+        "Ruby on Rails",
+        "Django",
+        "Node.JS",
+        "Pyramid",
+        "Flask",
+        "Express"
+      ]
     },
     {
       "category": "Tools & Platforms",
       "items": ["Git", "Docker", "AWS", "Azure"]
     },
     {
+      "category": "Data Science & Research",
+      "items": ["PyMC", "Airflow", "Pandas", "NumPy", "SciPy", "Matplotlib"]
+    },
+    {
       "category": "Other Skills",
-      "items": [
-        "Add any other relevant skills",
-        "e.g., Data Analysis, UI/UX Design"
-      ]
+      "items": ["Leadership", "Project Management", "Bayesian Analysis"]
     }
   ]
 }

@@ -6,9 +6,13 @@ import StandardPageLayout from "../layouts/StandardPageLayout.astro";
 import skillsData from "../data/skills.json";
 
 // Get experience and education
-const experience = (await getCollection("experience")).filter(
-  (entry) => entry.data.hidden != true,
-);
+const experience = (await getCollection("experience"))
+  .filter((entry) => entry.data.hidden != true)
+  .sort(
+    (a, b) =>
+      new Date(b.data.startDate).getTime() -
+      new Date(a.data.startDate).getTime(),
+  );
 const education = (await getCollection("education")).filter(
   (entry) => entry.data.hidden != true,
 );
@@ -94,7 +98,7 @@ const getOverflowSkills = (skills: readonly string[]): readonly string[] => {
     <h1 class="text-4xl md:text-5xl font-bold text-theme-primary mb-4">
       About Me
     </h1>
-    <p class="text-lg text-theme-text/80 max-w-2xl">
+    <p class="text-lg text-theme-text/80 max-w-5xl">
       Full-stack developer, designer, and creative technologist passionate about
       building beautiful, functional digital experiences.
     </p>
@@ -102,7 +106,7 @@ const getOverflowSkills = (skills: readonly string[]): readonly string[] => {
 
   {/* Bio Section */}
   <section class="py-12 md:py-16">
-    <div class="max-w-3xl">
+    <div class="max-w-5xl">
       <h2 class="text-3xl font-bold text-theme-primary mb-6">Who I Am</h2>
       <div class="space-y-4 text-theme-text/80 leading-relaxed">
         <p>
