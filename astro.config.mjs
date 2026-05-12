@@ -20,11 +20,11 @@ export default defineConfig({
       [
         rehypeMermaid,
         {
-          strategy: "inline-svg",
+          strategy: "pre-mermaid",
           errorFallback: (element) => element,
           mermaidConfig: {
             theme: "base",
-            fontFamily: "\"Cascadia Code\", \"Space Mono\", monospace",
+            fontFamily: '"Cascadia Code", "Space Mono", monospace',
             themeVariables: {
               background: "transparent",
               primaryColor: "#3b82f6",

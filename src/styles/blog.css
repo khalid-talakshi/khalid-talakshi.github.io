@@ -80,6 +80,21 @@ html {
 }
 
 /* Mermaid diagram rendering */
+.prose pre.mermaid {
+  display: block;
+  width: 100%;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+  background: color-mix(
+    in oklab,
+    var(--color-theme-muted) 45%,
+    transparent
+  ) !important;
+  border: 1px solid var(--color-theme-border) !important;
+  border-radius: 0.75rem;
+}
+
 .prose svg[id^="mermaid-"] {
   display: block;
   width: 100% !important;
@@ -87,10 +102,18 @@ html {
   height: auto;
   font-size: 1em;
   margin: 1.5rem 0;
-  padding: 0.75rem;
+  padding: 1.25rem;
   background: color-mix(in oklab, var(--color-theme-muted) 45%, transparent);
   border: 1px solid var(--color-theme-border);
   border-radius: 0.75rem;
+}
+
+.prose pre.mermaid svg[id^="mermaid-"] {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
 }
 
 .prose svg[id^="mermaid-"] .background,
@@ -194,7 +217,8 @@ html {
   height: 0.7rem;
   border-radius: 9999px;
   display: inline-block;
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-theme-border) 80%, transparent);
+  box-shadow: 0 0 0 1px
+    color-mix(in oklab, var(--color-theme-border) 80%, transparent);
 }
 
 .prose .chart-legend-swatch--bar {
@@ -225,8 +249,20 @@ html {
 
   .prose svg[id^="mermaid-"] {
     margin: 1rem -0.25rem;
-    max-width: calc(100% + 0.5rem);
-    padding: 0.5rem;
+    max-width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+  }
+
+  .prose pre.mermaid svg[id^="mermaid-"] {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .prose pre.mermaid {
+    margin: 1rem -0.25rem;
+    padding: 0.75rem;
     border-radius: 0.5rem;
   }
 }

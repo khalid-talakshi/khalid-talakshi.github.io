@@ -145,4 +145,6 @@ const allPosts = await getCollection("blog");
   } else {
     normalizeMermaidXyAxisLabels();
   }
+
+  document.addEventListener("mermaid:rendered", normalizeMermaidXyAxisLabels);
 </script>

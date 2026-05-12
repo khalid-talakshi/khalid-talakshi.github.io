@@ -39,7 +39,7 @@ In terms of yearly planning we want to figure out the best time to start and end
 ```mermaid
 xychart-beta
     title "Week Schedule By Type"
-    x-axis [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12]
+    x-axis [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     y-axis "Weeks" 0 --> 4.5
     line [0, 0, 1, 2, 2, 3, 3, 2, 3, 4, 1, 0]
     line [0, 1, 2, 2, 2, 1, 0, 2, 1, 0, 0, 0]
