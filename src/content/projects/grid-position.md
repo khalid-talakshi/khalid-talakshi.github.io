@@ -9,9 +9,12 @@ tags:
   - "racing"
 image: "/images/project-placeholder.jpg"
 links:
-  - type: "download"
-    href: "https://your-project-link.com/download"
-    label: "Download release"
+  - type: "web"
+    href: "https://kt-grid-position-research.streamlit.app/"
+    label: "View online"
+  - type: "github"
+    href: "https://github.com/khalid-talakshi/grid-position-research"
+    label: "Github Repo"
 technologies:
   - "Python"
   - "PyMC"
